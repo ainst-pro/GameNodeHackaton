@@ -1,16 +1,21 @@
 import { Injectable } from '@angular/core';
 import * as _ from 'lodash';
+import {Web3NativeService} from "./web3/web3.native.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class MainService {
 
-  constructor() { }
+  constructor(public web3 : Web3NativeService) {
+    this.web3.loadNativeWeb3();
+  }
 
   public map = [];
+  public gameData = {};
 
   public player = {
+    address: '',
     position: {
       c: 1,
       r:1,
@@ -21,6 +26,7 @@ export class MainService {
 
 
   public player2 = {
+    address: '',
     position: {
       c: 30,
       r:1,
@@ -30,6 +36,7 @@ export class MainService {
   };
 
   public player3 = {
+    address: '',
     position: {
       c: 1,
       r:30,
@@ -87,6 +94,19 @@ export class MainService {
   async getOtherPlayers(r, c) {
     // Данные получаются из контракта
 
+  }
+
+  async register() {
+    console.log('registerPlayer', await this.web3.Game.methods.registerPlayer().send({from: this.web3.getCurrentAddress()}));
+  }
+
+  async start() {
+    console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
+  }
+
+  async getData() {
+    this.gameData = await this.web3.getData();
+    console.log('getData', this.gameData);
   }
 
 }

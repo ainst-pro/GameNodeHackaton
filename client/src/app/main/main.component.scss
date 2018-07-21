@@ -31,9 +31,16 @@
 .hello {
   button {
     background-color: #ff0000 !important;
+    width: 200px;
   }
 
   p {
     font-size: 14pt;
   }
+}
+
+.loader{
+  width: 30px;
+  height: 30px;
+  display:inline-block;
 }

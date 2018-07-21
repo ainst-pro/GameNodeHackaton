@@ -11,23 +11,23 @@ import {logger} from "codelyzer/util/logger";
 })
 export class FieldComponent implements OnInit {
 
-  constructor(public requestService: MainService, public web3 : Web3NativeService) {
+  constructor(public mainService: MainService, public web3 : Web3NativeService) {
     this.web3.loadNativeWeb3();
   }
 
   isPlayerHere(c, r) {
-    return (this.requestService.player.position.c === c && this.requestService.player.position.r === r)
+    return (this.mainService.player.position.c === c && this.mainService.player.position.r === r)
   }
   isPlayer2Here(c, r) {
-    return (this.requestService.player2.position.c === c && this.requestService.player2.position.r === r)
+    return (this.mainService.player2.position.c === c && this.mainService.player2.position.r === r)
   }
   isPlayer3Here(c, r) {
-    return (this.requestService.player3.position.c === c && this.requestService.player3.position.r === r)
+    return (this.mainService.player3.position.c === c && this.mainService.player3.position.r === r)
   }
 
 
   async ngOnInit() {
-    await this.requestService.getMap();
+    await this.mainService.getMap(); // TODO старый
 
     console.log(this.web3.getCurrentAddress())
     console.log(await this.web3.getData())
@@ -44,7 +44,7 @@ export class FieldComponent implements OnInit {
   }
 
   async movePlayer(r, c) {
-    await this.requestService.movePlayer(r, c);
+    await this.mainService.movePlayer(r, c);
   }
 
 }
