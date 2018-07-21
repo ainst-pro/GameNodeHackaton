@@ -17,7 +17,7 @@ contract EnergyWars {
     uint8[900] public field;
 
     Player[] public players;
-    mapping (address => boolean) checkGamer;
+    mapping (address => bool) checkGamer;
     uint256 public idxCurrentPlayerTurn = 0;
     Bonus public gameBonus;
     uint256 public mapBlock;
@@ -76,7 +76,7 @@ contract EnergyWars {
             position = 796;
 
         players.push(Player(msg.sender, position, 1 /*basic energy*/));
-        checkGamer[msg.sender] = True;
+        checkGamer[msg.sender] = true;
 
         if (players.length == 3) state = GameState.Started;
     }
@@ -93,16 +93,16 @@ contract EnergyWars {
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        asset(xOffset <= 3 && yOffset == 0  || yOffset <= 3 && xOffset == 0);
+        assert(xOffset <= 3 && yOffset == 0  || yOffset <= 3 && xOffset == 0);
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
-        uint16 newX = x + xOffset;
-        uint16 newY = y + yOffset;
+        uint16 newX = uint16(x + xOffset);
+        uint16 newY = uint16(y + yOffset);
         assert(newX > 0 && newX < 30);
         assert(newY > 0 && newY < 30);
         //устанавливаем новую позицию и отнимаем энергию за ход
         player.position = (newY - 1) * 30 + newX - 1;
-        player.energy -= (player.energy * stepEnergy[xOffset + yOffset -1]) / 100;
+        player.energy -= (player.energy * stepEnergy[uint256(xOffset + yOffset - 1)]) / 100;
         player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
         //расчитать и прибавить если выпадит бонусную энергию
