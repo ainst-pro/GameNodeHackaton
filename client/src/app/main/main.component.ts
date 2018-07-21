@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Web3NativeService} from "../web3/web3.native.service";
 import {MainService} from "../main.service";
-import { ActivatedRoute } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import * as _ from "lodash";
 
 @Component({
@@ -11,7 +11,7 @@ import * as _ from "lodash";
 })
 export class MainComponent implements OnInit {
 
-  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: ActivatedRoute) {
+  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router) {
     this.web3.loadNativeWeb3();
   }
 

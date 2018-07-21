@@ -78,7 +78,7 @@ contract EnergyWars {
         players.push(Player(msg.sender, position, 1 /*basic energy*/));
         checkGamer[msg.sender] = true;
 
-        if (players.length == 3) state = GameState.Started;
+        if (players.length == 3) state = GameState.WaitingForMapGeneration;
     }
 
     function getField() view public returns (uint8[900])

@@ -38,7 +38,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     return this.descs[this.state];
   }
   async ngOnInit() {
-    await this.mainService.getMap(); // TODO старый
+    // await this.mainService.getMap(); // TODO старый
 
     this.state = await this.web3.Game.methods.state().call();
     this.data = await this.web3.getData();
@@ -46,7 +46,8 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.timer = setInterval(async () =>{
        this.state = await this.web3.Game.methods.state().call();
        this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
-       this.data = await this.web3.Game.methods.data().call();
+       this.data = await this.web3.getData();
+
     }, 5000);
 
     // console.log(this.web3.getCurrentAddress())

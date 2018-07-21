@@ -87,6 +87,12 @@ export class Web3NativeService {
       }
     }
 
+    public async getState()
+    {
+      const data = await this.Game.methods.state().call();
+      return data;
+    }
+
     getCurrentAddress()
     {
       return this.web3.currentProvider.publicConfigStore.getState().selectedAddress;
@@ -99,6 +105,10 @@ export class Web3NativeService {
 
     public get accounts() {
         return this.web3.accounts;
+    }
+
+    async action(xOffset, yOffset, indexTargetPlayer) {
+      await this.web3.Game.methods.action(xOffset, yOffset, indexTargetPlayer).send({from: this.web3.getCurrentAddress()})
     }
 
     public loadNativeWeb3() {
