@@ -1,7 +1,39 @@
-.cell
-{
-  width: 6px;
-  height: 6px;
-  border: 1px solid black;
-  background: white;
+.title {
+  padding-top: 170pt;
+
+  p {
+    font-size: 36pt;
+  }
+
+  h1 {
+    font-weight: bold;
+    font-size: 72pt;
+    color: #eee;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 800px) {
+    h1 {
+      font-size: 52pt;
+    }
+    p {
+      font-size: 24pt;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .title {
+    padding-top: 70pt;
+  }
+}
+
+.hello {
+  button {
+    background-color: #ff0000 !important;
+  }
+
+  p {
+    font-size: 14pt;
+  }
 }
