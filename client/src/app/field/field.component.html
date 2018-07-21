@@ -4,12 +4,20 @@
 
       <h1>Energy Wars</h1>
 
-      <div *ngFor="let player of data?.players">
-        <p>
-          <strong>Игрок {{player.playerAddress}}</strong>
-          <strong *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(это Вы)</strong>
-          {{ player.energy }}
+      <div *ngFor="let player of data?.players; let i = index"
+      [ngClass]="{
+      playerMeta: true,
+      active: i === 2
+      }">
+          <h5>
+            <i class="fas ft-flag player{{ i+1 }}Color"></i>
+            Игрок
+            <sup class="text-muted small" *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(это Вы)</sup>
+          </h5>
+        <p class="address">
+          {{player.playerAddress}}
         </p>
+        <h4 class="float-right"><i class="fa fa-fire"></i> {{ player.energy }}</h4>
       </div>
       <!--<p><strong>Your Energy:</strong> {{ requestService.player.energy }}</p>-->
       <!--<p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>-->

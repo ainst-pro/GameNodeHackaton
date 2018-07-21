@@ -58,22 +58,22 @@ export class FieldComponent implements OnInit, OnDestroy {
        for (let p of this.data.players) {
          if (p.playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase()) {
            this.player = p;
-           this.player.x = (p.x).toFixed(0);
-           this.player.y = (p.y).toFixed(0); console.log("!")
+           this.player.x = p.x;
+           this.player.y = p.y;
          } else {
            if (!this.player2) {
              this.player2 = p;
-             this.player2.x = (p.x).toFixed(0);
-             this.player2.y = (p.y).toFixed(0);
+             this.player2.x = p.x;
+             this.player2.y = p.y;
            } else {
              this.player3 = p;
-             this.player3.x = (p.x).toFixed(0);
-             this.player3.y = (p.y).toFixed(0);
+             this.player3.x = p.x;
+             this.player3.y = p.y;
            }
          }
          console.log(this.player, this.player2, this.player3)
        }
-
+      // clearInterval(this.timer)
     }, 5000);
 
     // console.log(this.web3.getCurrentAddress())
