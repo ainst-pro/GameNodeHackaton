@@ -8,6 +8,8 @@
       <p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>
       <p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>
 
+      <p>{{getStateDescription()}}</p>
+
       <div id="map">
         <div
              *ngFor="let cell of requestService.map"

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {getRandomString} from "selenium-webdriver/safari";
 import {MainService} from "app/main.service";
 import {Web3NativeService} from "../web3/web3.native.service";
@@ -9,7 +9,7 @@ import {logger} from "codelyzer/util/logger";
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })
-export class FieldComponent implements OnInit {
+export class FieldComponent implements OnInit, OnDestroy {
 
   constructor(public requestService: MainService, public web3 : Web3NativeService) {
     this.web3.loadNativeWeb3();
@@ -26,13 +26,29 @@ export class FieldComponent implements OnInit {
   }
 
 
+  timer: any;
+  public state: number;
+  public idxCurrentPlayerTurn: number;
+
+  descs = ['Ожидание игроков...', 'Ожадание начала игры', 'Идёт игра', 'Игра завершена!'];
+  getStateDescription()
+  {
+    return this.descs[this.state];
+  }
   async ngOnInit() {
     await this.requestService.getMap();
 
-    console.log(this.web3.getCurrentAddress())
-    console.log(await this.web3.getData())
+    this.state = await this.web3.Game.methods.state().call();
+    this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
+    this.timer = setInterval(async () =>{
+       this.state = await this.web3.Game.methods.state().call();
+       this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
+    }, 4000);
+
+    // console.log(this.web3.getCurrentAddress())
+    // console.log(await this.web3.getData())
     // console.log('gameBonus', await this.web3.Game.methods.getData().call());
-    console.log('idxCurrentPlayerTurn', await this.web3.Game.methods.idxCurrentPlayerTurn().call());
+    // console.log('idxCurrentPlayerTurn', await this.web3.Game.methods.idxCurrentPlayerTurn().call());
     // console.log('state', await this.web3.Game.methods.players(0).call());
     // console.log('state', await this.web3.Game.methods.getField().call());
 
@@ -45,6 +61,10 @@ export class FieldComponent implements OnInit {
 
   async movePlayer(r, c) {
     await this.requestService.movePlayer(r, c);
+  }
+
+  ngOnDestroy(): void {
+    if (this.timer) clearInterval(this.timer);
   }
 
 }
