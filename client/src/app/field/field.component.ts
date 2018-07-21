@@ -15,15 +15,19 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.web3.loadNativeWeb3();
   }
 
+  player: any;
+  player2: any;
+  player3: any;
+
   isPlayerHere(c, r) {
-    return (this.mainService.player.position.c === c && this.mainService.player.position.r === r)
+    return (this.player.x.toString() === c.toString() && this.player.y.toString() === r.toString())
     // return (this.data.players[0].x === x && this.data.players[0].y === y)
   }
   isPlayer2Here(c, r) {
-    return (this.mainService.player2.position.c === c && this.mainService.player2.position.r === r)
+    return (this.player2.x.toString() === c.toString() && this.player2.y.toString() === r.toString())
   }
   isPlayer3Here(c, r) {
-    return (this.mainService.player3.position.c === c && this.mainService.player3.position.r === r)
+    return (this.player3.x.toString() === c.toString() && this.player3.y.toString() === r.toString())
   }
 
 
@@ -38,20 +42,37 @@ export class FieldComponent implements OnInit, OnDestroy {
   {
     return this.descs[this.state];
   }
-  async ngOnInit() {
-    // await this.mainService.getMap(); // TODO старый
 
-    this.state = await this.web3.Game.methods.state().call();
-    this.data = await this.web3.getData();
-    this.map = [];
-    this.data.field.forEach((x, idx) => {return this.map.push({c: idx%30, r: idx/30, value: x});});
-    this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
+  async ngOnInit() {
     this.timer = setInterval(async () =>{
        this.state = await this.web3.Game.methods.state().call();
        this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
        this.data = await this.web3.getData();
        this.map = [];
-       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: idx/30, value: x});});
+       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: (idx/30).toFixed(0), value: x/100});});
+       console.log(this.data);
+
+      this.player = undefined;
+      this.player2 = undefined;
+      this.player3 = undefined;
+       for (let p of this.data.players) {
+         if (p.playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase()) {
+           this.player = p;
+           this.player.x = (p.x).toFixed(0);
+           this.player.y = (p.y).toFixed(0); console.log("!")
+         } else {
+           if (!this.player2) {
+             this.player2 = p;
+             this.player2.x = (p.x).toFixed(0);
+             this.player2.y = (p.y).toFixed(0);
+           } else {
+             this.player3 = p;
+             this.player3.x = (p.x).toFixed(0);
+             this.player3.y = (p.y).toFixed(0);
+           }
+         }
+         console.log(this.player, this.player2, this.player3)
+       }
 
     }, 5000);
 

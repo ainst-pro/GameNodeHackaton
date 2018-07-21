@@ -20,12 +20,11 @@ export class MainComponent implements OnInit {
   playersReady = false;
 
   async ngOnInit() {
-    this.mainService.player.address = this.web3.getCurrentAddress();
 
     let intervalId = setInterval(async () => {
       await this.mainService.getData();
       let player = _.find(this.mainService.gameData.players, (o) => {
-        return o.playerAddress.toString().toLowerCase() === this.mainService.player.address.toString().toLowerCase();
+        return o.playerAddress.toString().toLowerCase() === this.web3.getCurrentAddress().toString().toLowerCase();
       });
       console.log(player);
       if (player) {

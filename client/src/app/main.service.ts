@@ -15,36 +15,6 @@ export class MainService {
   public gameData: any = {};
   public gameState: any = 0;
 
-  public player = {
-    address: '',
-    position: {
-      c: 1,
-      r:1,
-    },
-    energy: 100,
-    points: 0,
-  };
-
-
-  public player2 = {
-    address: '',
-    position: {
-      c: 30,
-      r:1,
-    },
-    energy: 100,
-    points: 0,
-  };
-
-  public player3 = {
-    address: '',
-    position: {
-      c: 1,
-      r:30,
-    },
-    energy: 100,
-    points: 0,
-  };
 
   getRandomFloat(min, max) {
     return (Math.random() * (max - min) + min).toFixed(1);
