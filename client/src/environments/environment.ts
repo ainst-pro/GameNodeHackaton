@@ -5,6 +5,5 @@
 
 export const environment = {
     production: false,
-    server: 'http://localhost.loc:3002/api/v1',
-    subdomainExample: 'http://%.localhost.loc:4200'
+    server: ''
 };

@@ -9,11 +9,13 @@ import * as $ from 'jquery';
 // import {ToastrModule} from 'ngx-toastr';
 import {BrowserModule} from '@angular/platform-browser';
 import { MainComponent } from './main/main.component';
+import { FieldComponent } from './field/field.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MainComponent,
+        FieldComponent,
     ],
     imports: [
         BrowserModule,
