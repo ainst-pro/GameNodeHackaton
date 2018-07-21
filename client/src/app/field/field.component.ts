@@ -17,6 +17,7 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   isPlayerHere(c, r) {
     return (this.requestService.player.position.c === c && this.requestService.player.position.r === r)
+    // return (this.data.players[0].x === x && this.data.players[0].y === y)
   }
   isPlayer2Here(c, r) {
     return (this.requestService.player2.position.c === c && this.requestService.player2.position.r === r)
@@ -29,6 +30,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   timer: any;
   public state: number;
   public idxCurrentPlayerTurn: number;
+  public data: any;
 
   descs = ['Ожидание игроков...', 'Ожадание начала игры', 'Идёт игра', 'Игра завершена!'];
   getStateDescription()
@@ -39,11 +41,13 @@ export class FieldComponent implements OnInit, OnDestroy {
     await this.requestService.getMap();
 
     this.state = await this.web3.Game.methods.state().call();
+    this.data = await this.web3.getData();
     this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
     this.timer = setInterval(async () =>{
        this.state = await this.web3.Game.methods.state().call();
        this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
-    }, 4000);
+       this.data = await this.web3.Game.methods.data().call();
+    }, 5000);
 
     // console.log(this.web3.getCurrentAddress())
     // console.log(await this.web3.getData())
