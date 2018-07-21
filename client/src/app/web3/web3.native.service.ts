@@ -74,6 +74,10 @@ export class Web3NativeService {
         }
     }
 
+    getCurrentAddress()
+    {
+      return this.web3.currentProvider.publicConfigStore.getState().selectedAddress;
+    }
     Game: any;
 
     public isNativeInstalled(): boolean {
