@@ -6,7 +6,6 @@ contract EnergyWars {
     struct Bonus {
         uint16 position;
         uint16 value;
-        bool isView;
     }
 
     struct Gamer {
@@ -15,11 +14,11 @@ contract EnergyWars {
         uint256 energy;
     }
 
-    uint16[900] gamePlace;
+    uint16[900] public gamePlace;
 
-    Gamer[] gamers;
+    Gamer[] public gamers;
     mapping (address => boolean) checkGamer;
-    uint8 idxGamerStep = 0;
+    uint8 public idxGamerStep = 0;
     Bonus public gameBonus;
 
     function EnergyWars(){
@@ -36,14 +35,12 @@ contract EnergyWars {
         checkGamer[msg.sender] = True;
     }
 
-    function getInfoGamer(uint8 index) constant public returns(uint16 x, uint16 y, uint256 energy)
-    {
-
-    }
-
     function action() public
     {
         assert(gamers[idxGameStep].idx == msg.sender);
         assert(gamer.length == 3);
+
+        idxGamerStep += 1;
+        if (idxGamerStep == 3) idxGamerStep = 0;
     }
 }
