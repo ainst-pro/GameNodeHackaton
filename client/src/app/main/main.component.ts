@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Web3NativeService} from "../web3/web3.native.service";
 import {MainService} from "../main.service";
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import * as _ from "lodash";
 
 @Component({
@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
   async ngOnInit() {
     this.mainService.player.address = this.web3.getCurrentAddress();
 
-    setInterval(async () => {
+    let intervalId = setInterval(async () => {
       await this.mainService.getData();
       let player = _.find(this.mainService.gameData.players, (o) => {
         return o.playerAddress.toString().toLowerCase() === this.mainService.player.address.toString().toLowerCase();
@@ -39,6 +39,10 @@ export class MainComponent implements OnInit {
       if (!nullPlayer) {
         this.playersReady = true;
       }
+
+      if (this.mainService.gameState === '2'){
+        clearInterval(intervalId);
+      }
     }, 2000)
 
   }
@@ -50,7 +54,7 @@ export class MainComponent implements OnInit {
 
   async start() {
     await this.mainService.start();
-    this.router.navigate(['/field']);
+    await this.router.navigate(['/field']);
   }
 
 }

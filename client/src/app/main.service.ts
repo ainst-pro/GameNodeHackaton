@@ -13,6 +13,7 @@ export class MainService {
 
   public map = [];
   public gameData: any = {};
+  public gameState: any = 0;
 
   public player = {
     address: '',
@@ -104,14 +105,14 @@ export class MainService {
 
   async start() {
     let state = await this.web3.getState();
-    if (state === 1) console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
+    if (state === '1') console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
   }
 
   async getData() {
     this.gameData = await this.web3.getData();
-    let state = await this.web3.getState();
+    this.gameState = await this.web3.getState();
     console.log('getData', this.gameData);
-    console.log('State', state);
+    console.log('State', this.gameState);
   }
 
 }
