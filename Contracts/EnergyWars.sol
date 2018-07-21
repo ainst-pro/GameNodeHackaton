@@ -20,9 +20,12 @@ contract EnergyWars {
     mapping (address => boolean) checkGamer;
     uint8 public idxCurrentPlayerTurn = 0;
     Bonus public gameBonus;
+    uint256 public mapBlock;
+
     enum GameState
     {
         WaitingForPlayers,
+        WaitingForMapGeneration,
         Started,
         Finished
     }
@@ -33,6 +36,28 @@ contract EnergyWars {
 
     }
 
+    function startGame () public {
+        assert(state == GameState.WaitingForMapGeneration);
+
+        for(uint256 n = 1;n < 4;n++)
+        {
+            uint256 source = uint256(blockhash(mapBlock - n));
+            int16 positionX = int16((source % 900) % 30);
+            int16 positionY = int16((source % 900) / 30);
+            uint256 shift = 2;
+            for(int16 x = -2;x < 2;x++)
+            for(int16 y = -2;y < 2;y++)
+            {
+                uint256 position = uint256((positionY + y) * 30 + positionX + x);
+                if (position < 900)
+                {
+                 field[position] += uint8((source / shift) % 40);
+                 shift = shift * 2;
+                }
+            }
+        }
+        state = GameState.Started;
+    }
 
     function registerPlayer() public
     {
@@ -41,9 +66,10 @@ contract EnergyWars {
 
         // uint16 position = uint16((blockhash(block.number) + block.timestamp) % 900);
         uint16 position;
-        if (players.length == 0)
+        if (players.length == 0) {
             position = 94;
-        else if (players.length == 1)
+            mapBlock = block.number + 4;
+        }else if (players.length == 1)
             position = 147;
         else
             position = 796;
