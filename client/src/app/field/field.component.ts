@@ -30,8 +30,13 @@ export class FieldComponent implements OnInit {
     await this.requestService.getMap();
 
     console.log(this.web3.getCurrentAddress())
-    console.log('state', await this.web3.Game.methods.state().call());
-    console.log('state', await this.web3.Game.methods.getField().call());
+    console.log(await this.web3.getData())
+    // console.log('gameBonus', await this.web3.Game.methods.getData().call());
+    console.log('idxCurrentPlayerTurn', await this.web3.Game.methods.idxCurrentPlayerTurn().call());
+    // console.log('state', await this.web3.Game.methods.players(0).call());
+    // console.log('state', await this.web3.Game.methods.getField().call());
+
+
     // console.log('state', await this.web3.Game.methods.registerPlayer().send({from: this.web3.getCurrentAddress()}));
     // console.log('state', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
     // for(let i=0 ; i < 900;i++)

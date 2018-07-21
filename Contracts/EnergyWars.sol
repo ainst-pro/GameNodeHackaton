@@ -86,6 +86,36 @@ contract EnergyWars {
         return field;
     }
 
+    function getData() view public returns (address[3] playerAddress, uint16[3] position, uint256[3] energy,
+        uint16 bonusPosition, uint16 bonusValue, uint8[900] _field)
+    {
+        if (players.length > 0)
+        {
+            playerAddress[0] = players[0].playerAddress;
+            energy[0] = players[0].energy;
+            position[0] = players[0].position;
+        }
+
+        if (players.length > 1)
+        {
+            position[1] = players[1].position;
+            playerAddress[1] = players[1].playerAddress;
+            energy[1] = players[1].energy;
+        }
+
+        if (players.length > 2)
+        {
+            position[2] = players[2].position;
+            playerAddress[2] = players[2].playerAddress;
+            energy[2] = players[2].energy;
+        }
+
+
+        bonusPosition = gameBonus.position;
+        bonusValue = gameBonus.value;
+        _field = field;
+    }
+
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
         Player memory player = players[uint8(idxCurrentPlayerTurn%3)];

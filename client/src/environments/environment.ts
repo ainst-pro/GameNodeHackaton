@@ -6,7 +6,7 @@
 export const environment = {
     production: false,
     server: '',
-    GameAddress : '0x1a437f3913580bb066dd879cdf99a5cfb6e42ab0',
+    GameAddress : '0x76003dcaf7c23b0632f2dc3571af9b6c8721f8b4',
     GameABI: [
       {
         "constant": false,
@@ -94,6 +94,40 @@ export const environment = {
       {
         "constant": true,
         "inputs": [],
+        "name": "getData",
+        "outputs": [
+          {
+            "name": "playerAddress",
+            "type": "address[3]"
+          },
+          {
+            "name": "position",
+            "type": "uint16[3]"
+          },
+          {
+            "name": "energy",
+            "type": "uint256[3]"
+          },
+          {
+            "name": "bonusPosition",
+            "type": "uint16"
+          },
+          {
+            "name": "bonusValue",
+            "type": "uint16"
+          },
+          {
+            "name": "_field",
+            "type": "uint8[900]"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      },
+      {
+        "constant": true,
+        "inputs": [],
         "name": "getField",
         "outputs": [
           {
@@ -126,33 +160,6 @@ export const environment = {
         "outputs": [
           {
             "name": "",
-            "type": "uint256"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      },
-      {
-        "constant": true,
-        "inputs": [
-          {
-            "name": "",
-            "type": "uint256"
-          }
-        ],
-        "name": "players",
-        "outputs": [
-          {
-            "name": "playerAddress",
-            "type": "address"
-          },
-          {
-            "name": "position",
-            "type": "uint16"
-          },
-          {
-            "name": "energy",
             "type": "uint256"
           }
         ],

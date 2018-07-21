@@ -74,6 +74,19 @@ export class Web3NativeService {
         }
     }
 
+
+    public async getData()
+    {
+      const data = await this.Game.methods.getData().call();
+      return {
+        players: [{playerAddress : data.playerAddress[0], position:data.position[0], energy: data.energy[0]},
+          {playerAddress : data.playerAddress[1], position:data.position[1], energy: data.energy[1]},
+          {playerAddress : data.playerAddress[2], position:data.position[2], energy: data.energy[2]}],
+        bonus: {bonusPosition: data.bonusPosition, bonusValue: data.bonusValue},
+        field: data._field
+      }
+    }
+
     getCurrentAddress()
     {
       return this.web3.currentProvider.publicConfigStore.getState().selectedAddress;
