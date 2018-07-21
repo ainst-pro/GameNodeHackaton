@@ -81,6 +81,11 @@ contract EnergyWars {
         if (players.length == 3) state = GameState.Started;
     }
 
+    function getField() view public returns (uint8[900])
+    {
+        return field;
+    }
+
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
         Player memory player = players[uint8(idxCurrentPlayerTurn%3)];

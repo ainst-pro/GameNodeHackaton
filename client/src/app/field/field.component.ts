@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {getRandomString} from "selenium-webdriver/safari";
 import {MainService} from "app/main.service";
+import {Web3NativeService} from "../web3/web3.native.service";
 
 @Component({
   selector: 'app-field',
@@ -9,7 +10,9 @@ import {MainService} from "app/main.service";
 })
 export class FieldComponent implements OnInit {
 
-  constructor(public requestService: MainService) { }
+  constructor(public requestService: MainService, public web3 : Web3NativeService) {
+    this.web3.loadNativeWeb3();
+  }
 
   isPlayerHere(c, r) {
     return (this.requestService.player.position.c === c && this.requestService.player.position.r === r)
@@ -24,6 +27,11 @@ export class FieldComponent implements OnInit {
 
   async ngOnInit() {
     await this.requestService.getMap();
+
+    console.log('state', await this.web3.Game.methods.state().call());
+    console.log('state', await this.web3.Game.methods.getField().call());
+    // for(let i=0 ; i < 900;i++)
+    // console.log(`${i}`, await this.web3.Game.methods.field(i).call());
   }
 
   async movePlayer(r, c) {

@@ -10,6 +10,7 @@ import * as $ from 'jquery';
 import {BrowserModule} from '@angular/platform-browser';
 import { MainComponent } from './main/main.component';
 import { FieldComponent } from './field/field.component';
+import {Web3NativeService} from "./web3/web3.native.service";
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import { FieldComponent } from './field/field.component';
         // ToastrModule.forRoot(),
     ],
     providers: [
+      Web3NativeService
     ],
     bootstrap: [AppComponent]
 })

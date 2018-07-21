@@ -4,8 +4,8 @@
   "license": "",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build --prod",
+    "start": "node patch.js && ng serve",
+    "build": "node patch.js && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -33,6 +33,8 @@
     "bootstrap": "4.0.0",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.3",
+    "ethereumjs-tx": "^1.3.6",
+    "ethereumjs-util": "^5.2.0",
     "google-libphonenumber": "^3.1.10",
     "intl": "^1.2.5",
     "jquery": "^3.3.1",
