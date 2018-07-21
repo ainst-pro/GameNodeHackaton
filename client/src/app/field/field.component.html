@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12 pt-3">
+
+      <h1>Energy Wars</h1>
+
+      <p><strong>Your Energy:</strong> {{ requestService.player.energy }}</p>
+      <p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>
+      <p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>
+
+      <div id="map">
+        <div
+             *ngFor="let cell of requestService.map"
+             [ngStyle]="{background: 'rgba(81,121,183,' + cell.value + ')'}"
+             (click)="movePlayer(cell.r,cell.c)"
+             [ngClass]="{
+               cell: true,
+               playerHere: isPlayerHere(cell.c, cell.r),
+               player2Here: isPlayer2Here(cell.c, cell.r),
+               player3Here: isPlayer3Here(cell.c, cell.r)
+             }"
+        >
+          {{ cell.value }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
