@@ -105,7 +105,7 @@ export class MainService {
 
   async start() {
     let state = await this.web3.getState();
-    if (state === '1') console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
+    if (state == 1) console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
   }
 
   async getData() {

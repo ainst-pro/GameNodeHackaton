@@ -31,6 +31,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   public state: number;
   public idxCurrentPlayerTurn: number;
   public data: any;
+  public map = [];
 
   descs = ['Ожидание игроков...', 'Ожадание начала игры', 'Идёт игра', 'Игра завершена!'];
   getStateDescription()
@@ -42,11 +43,15 @@ export class FieldComponent implements OnInit, OnDestroy {
 
     this.state = await this.web3.Game.methods.state().call();
     this.data = await this.web3.getData();
+    this.map = [];
+    this.data.field.forEach((x, idx) => {return this.map.push({c: idx%30, r: idx/30, value: x});});
     this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
     this.timer = setInterval(async () =>{
        this.state = await this.web3.Game.methods.state().call();
        this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
        this.data = await this.web3.getData();
+       this.map = [];
+       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: idx/30, value: x});});
 
     }, 5000);
 
