@@ -12,7 +12,7 @@ export class MainService {
   }
 
   public map = [];
-  public gameData = {};
+  public gameData: any = {};
 
   public player = {
     address: '',
@@ -51,39 +51,41 @@ export class MainService {
 
   async getMap() {
     // Данные получаются из контракта
-    let rows = 30;
-    let cols = 30;
-    let _this = this;
-    function generateMap(rows, cols) {
-
-      let map = [];
-      for (let r = 1; r <= rows; r++) {
-        for (let c = 1; c <= cols; c++) {
-          map.push({
-            c,
-            r,
-            value: _this.getRandomFloat(.1,.9),
-          });
-        }
-      }
-      return map;
-    }
-
-    this.map = generateMap(rows, cols);
+    // let rows = 30;
+    // let cols = 30;
+    // let _this = this;
+    // function generateMap(rows, cols) {
+    //
+    //   let map = [];
+    //   for (let r = 1; r <= rows; r++) {
+    //     for (let c = 1; c <= cols; c++) {
+    //       map.push({
+    //         c,
+    //         r,
+    //         value: _this.getRandomFloat(.1,.9),
+    //       });
+    //     }
+    //   }
+    //   return map;
+    // }
+    //
+    // this.map = generateMap(rows, cols);
   }
 
   async movePlayer(r, c) {
     // Данные получаются из контракта
-    this.player.position.c = c;
-    this.player.position.r = r;
-    this.player.energy += 1;
+    // await this.web3.action(xOffset, yOffset, indexTargetPlayer);
 
-    let cell = _.find(this.map, (o) => { return o.c === c && o.r === r; });
-    let rnd = this.getRandomFloat(0,1);
-    console.log(rnd);
-    if (rnd <= cell.value) {
-      this.player.energy += 10;
-    }
+    // this.player.position.c = c;
+    // this.player.position.r = r;
+    // this.player.energy += 1;
+    //
+    // let cell = _.find(this.map, (o) => { return o.c === c && o.r === r; });
+    // let rnd = this.getRandomFloat(0,1);
+    // console.log(rnd);
+    // if (rnd <= cell.value) {
+    //   this.player.energy += 10;
+    // }
   }
 
   async getPlayer(r, c) {
@@ -101,12 +103,15 @@ export class MainService {
   }
 
   async start() {
-    console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
+    let state = await this.web3.getState();
+    if (state === 1) console.log('startGame', await this.web3.Game.methods.startGame().send({from: this.web3.getCurrentAddress()}));
   }
 
   async getData() {
     this.gameData = await this.web3.getData();
+    let state = await this.web3.getState();
     console.log('getData', this.gameData);
+    console.log('State', state);
   }
 
 }

@@ -4,7 +4,7 @@
 
       <h1>Energy Wars</h1>
 
-      <div *ngFor="let player of data.players">
+      <div *ngFor="let player of data?.players">
         <p>
           <strong>Игрок {{player.playerAddress}}</strong>
           <strong *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(это Вы)</strong>
@@ -19,7 +19,7 @@
 
       <div id="map">
         <div
-             *ngFor="let cell of mainService.map"
+             *ngFor="let cell of data?.field"
              [ngStyle]="{background: 'rgba(81,121,183,' + cell.value + ')'}"
              (click)="movePlayer(cell.r,cell.c)"
              [ngClass]="{
