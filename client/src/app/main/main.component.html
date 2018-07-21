@@ -52,7 +52,9 @@
 
       </button>
 
-      <p *ngIf="playerRegistered">You has been registered to the Game <br> Waiting for other players</p>
+      <p *ngIf="playerRegistered">You has been registered to the Game</p>
+        <p *ngIf="!playersReady"> Waiting for other players</p>
+        <p *ngIf="playersReady">All players ready!</p>
       <button class="btn bg-primary btn-lg white"
               *ngIf="playerRegistered"
               [disabled]="!playersReady"
