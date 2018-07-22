@@ -31,7 +31,7 @@
 
       <div class="text-center mt-3">
         <p>{{getStateDescription()}} <span *ngIf="!isMineTurn() && winner.playerAddress !== ''">Player {{ idxCurrentPlayerTurn+1 }} is turn.</span></p>
-        <div class="alertBox" *ngIf="isMineTurn()">
+        <div class="alertBox" *ngIf="isMineTurn() && winner.playerAddress == ''">
           <h3 class="p-0 m-0">
             Your turn!
           </h3>
