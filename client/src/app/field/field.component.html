@@ -23,7 +23,17 @@
         <p class="address">
           {{player.playerAddress}}
         </p>
-        <h4 class="float-right"><i class="fa fa-fire"></i> {{ player.energy }}</h4>
+        <h4 class="float-right">
+          <i
+             [ngClass]="{
+             'target fa fa-crosshairs mr-3' : true,
+             active: target == i
+             }"
+             (click)="setTarget(i)"
+          ></i>
+          <i class="fa fa-fire"></i>
+          {{ player.energy }}
+        </h4>
       </div>
       <!--<p><strong>Your Energy:</strong> {{ requestService.player.energy }}</p>-->
       <!--<p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>-->
