@@ -144,6 +144,7 @@ contract EnergyWars {
         assert(newX > 0 && newX < 30);
         assert(newY > 0 && newY < 30);
         //устанавливаем новую позицию
+        uint16 oldPos = player.position;
         player.position = newY * 30 + newX;
 
         // проверяем есть ли другой игрок в клетке и проводим бой
@@ -174,7 +175,7 @@ contract EnergyWars {
         //расчитать и прибавить если выпадит бонусную энергию
         if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position])
         {
-            field[player.position] = 0;
+            field[oldPos] = 0;
             player.energy += 1000;
         }
 
