@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-12 pt-3">
 
-      <h1>Energy Wars</h1>
+      <h1 class="text-center">Energy Wars</h1>
 
       <div *ngFor="let player of players; let i = index"
         [ngClass]="{
@@ -23,8 +23,12 @@
       <!--<p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>-->
       <!--<p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>-->
 
-      <p>{{getStateDescription()}}</p>
-      <p *ngIf="isMineTurn()">Ваш ход!</p>
+      <div class="text-center">
+        <p>{{getStateDescription()}}</p>
+        <div class="alertBox" *ngIf="isMineTurn()">
+          <h3 class="p-0">Ваш ход!</h3>
+        </div>
+      </div>
 
       <div id="map">
         <div
