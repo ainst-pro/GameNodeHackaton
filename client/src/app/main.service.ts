@@ -22,25 +22,25 @@ export class MainService {
 
   async getMap() {
     // Данные получаются из контракта
-    // let rows = 30;
-    // let cols = 30;
-    // let _this = this;
-    // function generateMap(rows, cols) {
-    //
-    //   let map = [];
-    //   for (let r = 1; r <= rows; r++) {
-    //     for (let c = 1; c <= cols; c++) {
-    //       map.push({
-    //         c,
-    //         r,
-    //         value: _this.getRandomFloat(.1,.9),
-    //       });
-    //     }
-    //   }
-    //   return map;
-    // }
-    //
-    // this.map = generateMap(rows, cols);
+    let rows = 30;
+    let cols = 30;
+    let _this = this;
+    function generateMap(rows, cols) {
+
+      let map = [];
+      for (let r = 1; r <= rows; r++) {
+        for (let c = 1; c <= cols; c++) {
+          map.push({
+            c,
+            r,
+            value: _this.getRandomFloat(.1,.9),
+          });
+        }
+      }
+      return map;
+    }
+
+    this.map = generateMap(rows, cols);
   }
 
   async movePlayer(r, c) {

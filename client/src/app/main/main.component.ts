@@ -3,6 +3,7 @@ import {Web3NativeService} from "../web3/web3.native.service";
 import {MainService} from "../main.service";
 import {Router} from '@angular/router';
 import * as _ from "lodash";
+import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-main',
@@ -11,7 +12,7 @@ import * as _ from "lodash";
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router) {
+  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router, private http: HttpClient) {
     this.web3.loadNativeWeb3();
   }
 
@@ -57,6 +58,10 @@ export class MainComponent implements OnInit, OnDestroy {
   async start() {
     await this.mainService.start();
     await this.router.navigate(['/field']);
+  }
+
+  async newGame() {
+    let response = await this.http.get('contract/EnergyWars.sol').toPromise();
   }
 
   ngOnDestroy(): void {
