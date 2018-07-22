@@ -49,6 +49,9 @@ export class FieldComponent implements OnInit, OnDestroy {
   isPlayer3Here(c, r) {
     return (this.players[2].x.toString() === c.toString() && this.players[2].y.toString() === r.toString() && this.players[2].energy > 0)
   }
+  isBonusHere(c, r) {
+    return (this.data.bonus.x.toString() === c.toString() && this.data.bonus.y.toString() === r.toString())
+  }
 
 
   timer: any;

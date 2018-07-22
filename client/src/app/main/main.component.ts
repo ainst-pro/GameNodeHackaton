@@ -62,7 +62,7 @@ export class MainComponent implements OnInit, OnDestroy {
   async newGame() {
     let game = await this.web3.newGame();
     console.log('NEW GAME', game);
-    if (game.address)
+    if (game)
     {
       this.web3.loadNativeWeb3();
       // await this.router.navigate(['/field?address=' + game.address]);
