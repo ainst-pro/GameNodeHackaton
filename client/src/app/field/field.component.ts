@@ -16,6 +16,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   }
 
   players: Array<any> = [];
+  player: any = {};
 
   isPlayerHere(c, r) {
     return (this.players[0].x.toString() === c.toString() && this.players[0].y.toString() === r.toString())
@@ -53,10 +54,9 @@ export class FieldComponent implements OnInit, OnDestroy {
        this.players = [];
        for (let p of this.data.players) {
          if (p.playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase()) {
-           this.players.unshift(p)
-         } else {
-           this.players.push(p);
+           this.player = p
          }
+           this.players.push(p);
          console.log(this.players[0], this.players[1], this.players[2])
        }
       // clearInterval(this.timer)
