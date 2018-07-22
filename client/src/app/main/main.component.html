@@ -9,62 +9,74 @@
 
   <div class="row hello">
     <div class="col-12 pt-3 text-center">
-      <button class="btn bg-success btn-lg white" style="background-color: #0ABC76 !important;" (click)="newGame()">
+      <button class="btn bg-success btn-lg white" style="background-color: #0ABC76 !important;" [disabled]="waitingForNewGame" (click)="newGame()">
         New Game
       </button>
+      <p *ngIf="waitingForNewGame">Идёт генерация новой игры. Пожалуйста, подождите...</p>
+      <p *ngIf="newGameAddress">
+        <strong>Новая игра создана адреса смарт-контракта {{newGameAddress}}</strong>
+      </p>
+      <p *ngIf="!waitingForNewGame">
+        Вы можете поделиться ссылкой на игру с друзьями <br>
+        {{gameLink}}
+      </p>
 
-      <p *ngIf="!playerRegistered">The game of new blockchain age is begining here</p>
-      <button class="btn bg-primary btn-lg white"
-              (click)="register()"
-              [disabled]="registerLoading"
-              *ngIf="!playerRegistered"
-      >
-        <span *ngIf="!registerLoading">
-        I'm with you!
-        </span>
 
-        <span *ngIf="registerLoading">
-          <svg class="loader" version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 50 60" enable-background="new 0 0 0 0" xml:space="preserve">
-          <circle fill="#fff" stroke="none" cx="6" cy="25" r="6">
-            <animate
-              attributeName="opacity"
-              dur="1s"
-              values="0;1;0"
-              repeatCount="indefinite"
-              begin="0.1"/>
-          </circle>
-          <circle fill="#fff" stroke="none" cx="26" cy="25" r="6">
-            <animate
-              attributeName="opacity"
-              dur="1s"
-              values="0;1;0"
-              repeatCount="indefinite"
-              begin="0.2"/>
-          </circle>
-          <circle fill="#fff" stroke="none" cx="46" cy="25" r="6">
-            <animate
-              attributeName="opacity"
-              dur="1s"
-              values="0;1;0"
-              repeatCount="indefinite"
-              begin="0.3"/>
-          </circle>
-        </svg>
-        </span>
+      <div *ngIf="!waitingForNewGame">
+        <p *ngIf="!playerRegistered">The game of new blockchain age is begining here</p>
+        <p>Текущий адрес игры {{gameAddress}}</p>
+        <button class="btn bg-primary btn-lg white"
+                (click)="register()"
+                [disabled]="registerLoading"
+                *ngIf="!playerRegistered"
+        >
+          <span *ngIf="!registerLoading">
+          I'm with you!
+          </span>
 
-      </button>
+          <span *ngIf="registerLoading">
+            <svg class="loader" version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+            viewBox="0 0 50 60" enable-background="new 0 0 0 0" xml:space="preserve">
+            <circle fill="#fff" stroke="none" cx="6" cy="25" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.1"/>
+            </circle>
+            <circle fill="#fff" stroke="none" cx="26" cy="25" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.2"/>
+            </circle>
+            <circle fill="#fff" stroke="none" cx="46" cy="25" r="6">
+              <animate
+                attributeName="opacity"
+                dur="1s"
+                values="0;1;0"
+                repeatCount="indefinite"
+                begin="0.3"/>
+            </circle>
+          </svg>
+          </span>
 
-      <p *ngIf="playerRegistered">You has been registered to the Game</p>
-        <p *ngIf="!playersReady"> Waiting for other players</p>
-        <p *ngIf="playersReady">All players ready!</p>
-      <button class="btn bg-primary btn-lg white"
-              *ngIf="playerRegistered"
-              [disabled]="!playersReady"
-              (click)="start()"
-      >
-        Lets GO!
-      </button>
+        </button>
+
+        <p *ngIf="playerRegistered">Вы были зарегистрированы в игре</p>
+          <p *ngIf="!playersReady">Ожидаем других игроков... {{amountPlayersReady}} из 3 готово</p>
+          <p *ngIf="playersReady">All players ready!</p>
+        <button class="btn bg-primary btn-lg white"
+                *ngIf="playerRegistered"
+                [disabled]="!playersReady"
+                (click)="start()"
+        >
+          Lets GO!
+        </button>
+      </div>
 
       <p class="small text-muted">using address {{ web3.getCurrentAddress().toLowerCase() }}</p>
     </div>
