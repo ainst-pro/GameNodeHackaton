@@ -46,10 +46,10 @@ export class FieldComponent implements OnInit, OnDestroy {
   async ngOnInit() {
     this.timer = setInterval(async () =>{
        this.state = await this.web3.Game.methods.state().call();
-       this.idxCurrentPlayerTurn = await this.web3.Game.methods.idxCurrentPlayerTurn().call();
+       this.idxCurrentPlayerTurn = (await this.web3.Game.methods.idxCurrentPlayerTurn().call()) * 1;
        this.data = await this.web3.getData();
        this.map = [];
-       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: (idx/30).toFixed(0), value: x/100});});
+       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: (idx/30).toFixed(0), value: (x*1+10)/100});});
        console.log(this.data);
 
       this.player = undefined;
@@ -90,12 +90,35 @@ export class FieldComponent implements OnInit, OnDestroy {
     // console.log(`${i}`, await this.web3.Game.methods.field(i).call());
   }
 
-  async movePlayer(r, c) {
-    await this.mainService.movePlayer(r, c);
+  async movePlayer(c, r) {
+
+    if (this.isHighlightedCell(c,r))
+    {
+      const player = this.data.players[this.idxCurrentPlayerTurn];
+      const offX = c - player.x;
+      const offY = r - player.y;
+      alert(offX + ' ' + offY);
+      this.web3.Game.methods.action(offX, offY, 0).send({from: this.web3.getCurrentAddress()});
+    }
+    // await this.mainService.movePlayer(r, c);
   }
 
   ngOnDestroy(): void {
     if (this.timer) clearInterval(this.timer);
   }
 
+  isHighlightedCell(c, r)
+  {
+    if (this.isMineTurn())
+    {
+      const player = this.data.players[this.idxCurrentPlayerTurn];
+      const offX = Math.abs(player.x - c);
+      const offY = Math.abs(player.y - r);
+      return (offX>0 && offX<=3 && offY ==0) || (offY>0 && offY<=3 && offX ==0);
+    }
+  }
+
+  isMineTurn() {
+    return this.data && this.data.players[this.idxCurrentPlayerTurn] && (this.data.players[this.idxCurrentPlayerTurn].playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase());
+  }
 }

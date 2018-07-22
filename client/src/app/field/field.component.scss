@@ -1,15 +1,20 @@
 #map {
 
   .cell.playerHere{
-    background: #ff470c !important;
+    background: #ff470c80 !important;
   }
 
   .cell.player2Here{
-    background: #00bf25 !important;
+    background: #00bf2580 !important;
   }
 
   .cell.player3Here{
-    background: #0016ff !important;
+    background: #0016ff80 !important;
+  }
+
+  .highlight
+  {
+    background: #ffff0060 !important;
   }
 
   .cell {

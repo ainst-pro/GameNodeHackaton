@@ -7,7 +7,7 @@
       <div *ngFor="let player of data?.players; let i = index"
       [ngClass]="{
       playerMeta: true,
-      active: i === 2
+      active: i === idxCurrentPlayerTurn
       }">
           <h5>
             <i class="fas ft-flag player{{ i+1 }}Color"></i>
@@ -24,14 +24,16 @@
       <!--<p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>-->
 
       <p>{{getStateDescription()}}</p>
+      <p *ngIf="isMineTurn()">Ваш ход!</p>
 
       <div id="map">
         <div
              *ngFor="let cell of map"
              [ngStyle]="{background: 'rgba(81,121,183,' + cell.value + ')'}"
-             (click)="movePlayer(cell.r,cell.c)"
+             (click)="movePlayer(cell.c,cell.r)"
              [ngClass]="{
                cell: true,
+               highlight: isHighlightedCell(cell.c, cell.r),
                playerHere: isPlayerHere(cell.c, cell.r),
                player2Here: isPlayer2Here(cell.c, cell.r),
                player3Here: isPlayer3Here(cell.c, cell.r)

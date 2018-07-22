@@ -40,14 +40,14 @@ contract EnergyWars {
     function startGame () public {
         assert(state == GameState.WaitingForMapGeneration);
 
-        for(uint256 n = 1;n < 4;n++)
+        for(uint256 n = 1;n < 5;n++)
         {
             uint256 source = uint256(blockhash(mapBlock - n));
             int16 positionX = int16((source % 900) % 30);
             int16 positionY = int16((source % 900) / 30);
             uint256 shift = 2;
-            for(int16 x = -2;x < 2;x++)
-            for(int16 y = -2;y < 2;y++)
+            for(int16 x = -3;x < 3;x++)
+            for(int16 y = -3;y < 3;y++)
             {
                 uint256 position = uint256((positionY + y) * 30 + positionX + x);
                 if (position < 900)

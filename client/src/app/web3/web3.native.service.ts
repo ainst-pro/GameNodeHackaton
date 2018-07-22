@@ -80,9 +80,9 @@ export class Web3NativeService {
       const data = await this.Game.methods.getData().call();
       return {
         players: [
-          {playerAddress : data.playerAddress[0], x: (data.position[0]%30).toFixed(0), y: (data.position[0]/30).toFixed(0), energy: data.energy[0]},
-          {playerAddress : data.playerAddress[1], x: (data.position[1]%30).toFixed(0), y: (data.position[1]/30).toFixed(0), energy: data.energy[1]},
-          {playerAddress : data.playerAddress[2], x: (data.position[2]%30).toFixed(0), y: (data.position[2]/30).toFixed(0), energy: data.energy[2]}
+          {playerAddress : data.playerAddress[0], x: data.position[0]%30, y: Math.floor(data.position[0]/30), energy: data.energy[0]},
+          {playerAddress : data.playerAddress[1], x: data.position[1]%30, y: Math.floor((data.position[1]/30)), energy: data.energy[1]},
+          {playerAddress : data.playerAddress[2], x: data.position[2]%30, y: Math.floor((data.position[2]/30)), energy: data.energy[2]}
           ],
         bonus: {bonusPosition: data.bonusPosition, bonusValue: data.bonusValue},
         field: data._field
