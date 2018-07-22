@@ -30,7 +30,7 @@ contract EnergyWars {
         Finished
     }
 
-    uint8[6] stepEnergy = [10, 20, 40, 70, 90, 95];
+    uint8[6] stepEnergy = [5, 15, 30, 70, 90, 95];
     GameState public state = GameState.WaitingForPlayers;
 
     function EnergyWars(){
@@ -143,31 +143,10 @@ contract EnergyWars {
         uint16 newY = uint16(int16(y) + yOffset);
         assert(newX > 0 && newX < 30);
         assert(newY > 0 && newY < 30);
-        //устанавливаем новую позицию и отнимаем энергию за ход
+        //устанавливаем новую позицию
         player.position = newY * 30 + newX;
-        player.energy -= (player.energy * stepEnergy[uint256(max(abs(xOffset), abs(yOffset)) - 1)]) / 100;
-        player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
-        //расчитать и прибавить если выпадит бонусную энергию
-        if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position])
-        {
-            field[player.position] = 0;
-            player.energy += 1000;
-        }
-
-        //расчитываем бонус
-        if ( gameBonus.position == 0 && gameBonus.value == 0 && uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= 30) {
-            gameBonus.position = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 900);
-            gameBonus.value = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 50) + 20;
-        }
-        if ( gameBonus.value > 0 && gameBonus.position == player.position ) {
-            player.energy += (players[indexTargetPlayer].energy * gameBonus.value) / 100;
-            players[indexTargetPlayer].energy -= (players[indexTargetPlayer].energy * gameBonus.value) / 100;
-            gameBonus.position = 0;
-            gameBonus.value = 0;
-        }
-
-        //проверяем есть ли другой игрок в клетке и проводим бой
+        // проверяем есть ли другой игрок в клетке и проводим бой
         if (players[uint8((idxCurrentPlayerTurn+1)%3)].position == player.position && players[uint8((idxCurrentPlayerTurn+1)%3)].energy > 0){
             if (player.energy > players[uint8((idxCurrentPlayerTurn+1)%3)].energy) {
                 player.energy += players[uint8((idxCurrentPlayerTurn+1)%3)].energy;
@@ -188,6 +167,29 @@ contract EnergyWars {
                 players[uint8((idxCurrentPlayerTurn+2)%3)].energy += player.energy;
                 player.energy = 0;
             }
+        }
+
+        // ...и отнимаем энергию за ход
+        player.energy -= (player.energy * stepEnergy[uint256(max(abs(xOffset), abs(yOffset)) - 1)]) / 100;
+        player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
+
+        //расчитать и прибавить если выпадит бонусную энергию
+        if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position])
+        {
+            field[player.position] = 0;
+            player.energy += 1000;
+        }
+
+        //расчитываем бонус
+        if ( gameBonus.position == 0 && gameBonus.value == 0 && uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= 30) {
+            gameBonus.position = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 900);
+            gameBonus.value = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 50) + 20;
+        }
+        if ( gameBonus.value > 0 && gameBonus.position == player.position ) {
+            player.energy += (players[indexTargetPlayer].energy * gameBonus.value) / 100;
+            players[indexTargetPlayer].energy -= (players[indexTargetPlayer].energy * gameBonus.value) / 100;
+            gameBonus.position = 0;
+            gameBonus.value = 0;
         }
 
         idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
