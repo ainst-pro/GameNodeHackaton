@@ -21,11 +21,13 @@ export class AppComponent {
   }
 
   constructor(private route: ActivatedRoute) {
+    environment.GameAddress = localStorage['address'] || environment.GameAddress;
     this.route.queryParams
       .subscribe(params => {
         if (params.address)
         {
           environment.GameAddress = params.address;
+          localStorage['address'] = environment.GameAddress;
         }
       });
   }

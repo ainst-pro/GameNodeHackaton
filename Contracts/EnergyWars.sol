@@ -149,7 +149,11 @@ contract EnergyWars {
         player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
         //расчитать и прибавить если выпадит бонусную энергию
-        if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position]) player.energy += 1000;
+        if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position])
+        {
+            field[player.position] = 0;
+            player.energy += 1000;
+        }
 
         //расчитываем бонус
         if ( gameBonus.position == 0 && gameBonus.value == 0 && uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= 30) {
