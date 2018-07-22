@@ -57,7 +57,8 @@
                highlight: isHighlightedCell(cell.c, cell.r),
                playerHere: isPlayerHere(cell.c, cell.r),
                player2Here: isPlayer2Here(cell.c, cell.r),
-               player3Here: isPlayer3Here(cell.c, cell.r)
+               player3Here: isPlayer3Here(cell.c, cell.r),
+               bonusHere: isBonusHere(cell.c, cell.r)
              }"
         >
           {{ cell.value }}

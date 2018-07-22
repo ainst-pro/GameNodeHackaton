@@ -323,7 +323,11 @@ export class Web3NativeService {
           {playerAddress : data.playerAddress[1], x: data.position[1]%30, y: Math.floor((data.position[1]/30)), energy: Math.floor(data.energy[1])},
           {playerAddress : data.playerAddress[2], x: data.position[2]%30, y: Math.floor((data.position[2]/30)), energy: Math.floor(data.energy[2])}
           ],
-        bonus: {bonusPosition: data.bonusPosition, bonusValue: data.bonusValue},
+        bonus: {
+          x: data.bonusPosition%30,
+          y: Math.floor(data.bonusPosition/30),
+          bonusValue: data.bonusValue
+        },
         field: data._field
       }
     }
