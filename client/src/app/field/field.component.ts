@@ -50,6 +50,7 @@ export class FieldComponent implements OnInit, OnDestroy {
     return (this.players[2].x.toString() === c.toString() && this.players[2].y.toString() === r.toString() && this.players[2].energy > 0)
   }
   isBonusHere(c, r) {
+    if (c == 0 && r == 0) return false;
     return (this.data.bonus.x.toString() === c.toString() && this.data.bonus.y.toString() === r.toString())
   }
 
