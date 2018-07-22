@@ -40,14 +40,14 @@ contract EnergyWars {
     function startGame () public {
         assert(state == GameState.WaitingForMapGeneration);
 
-        for(uint256 n = 1;n < 4;n++)
+        for(uint256 n = 1;n < 5;n++)
         {
             uint256 source = uint256(blockhash(mapBlock - n));
             int16 positionX = int16((source % 900) % 30);
             int16 positionY = int16((source % 900) / 30);
             uint256 shift = 2;
-            for(int16 x = -2;x < 2;x++)
-            for(int16 y = -2;y < 2;y++)
+            for(int16 x = -3;x < 3;x++)
+            for(int16 y = -3;y < 3;y++)
             {
                 uint256 position = uint256((positionY + y) * 30 + positionX + x);
                 if (position < 900)
@@ -75,7 +75,7 @@ contract EnergyWars {
         else
             position = 796;
 
-        players.push(Player(msg.sender, position, 1 /*basic energy*/));
+        players.push(Player(msg.sender, position, 100 /*basic energy*/));
         checkGamer[msg.sender] = true;
 
         if (players.length == 3) state = GameState.WaitingForMapGeneration;
@@ -118,12 +118,12 @@ contract EnergyWars {
 
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
-        Player memory player = players[uint8(idxCurrentPlayerTurn%3)];
+        Player player = players[uint8(idxCurrentPlayerTurn%3)];
         assert(player.playerAddress == msg.sender && player.energy > 0);
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        assert(xOffset <= 3 && yOffset == 0  || yOffset <= 3 && xOffset == 0);
+        assert((xOffset <= 3 && xOffset >=-3 && yOffset == 0)  || (yOffset <= 3 && yOffset >=-3 && xOffset == 0));
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
         uint16 newX = uint16(x + xOffset);
@@ -173,10 +173,15 @@ contract EnergyWars {
             }
         }
 
-        idxCurrentPlayerTurn += 1;
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) {
-            idxCurrentPlayerTurn += 1;
+        idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+        if (players[idxCurrentPlayerTurn].energy == 0) {
+            idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+
+            if (players[idxCurrentPlayerTurn].energy == 0) {
+                state = GameState.Finished;
+            }
         }
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
+
+        // if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
     }
 }
