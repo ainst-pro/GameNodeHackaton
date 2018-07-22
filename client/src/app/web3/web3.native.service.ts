@@ -356,6 +356,11 @@ export class Web3NativeService {
       await this.web3.Game.methods.action(xOffset, yOffset, indexTargetPlayer).send({from: this.web3.getCurrentAddress()})
     }
 
+    public recreateContract()
+    {
+      this.Game = this.GetContract(environment.GameABI, environment.GameAddress);
+    }
+
     public loadNativeWeb3() {
         Web3 = require('./web3_client');
 
