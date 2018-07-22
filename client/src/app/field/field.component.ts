@@ -5,6 +5,7 @@ import {Web3NativeService} from "../web3/web3.native.service";
 import {logger} from "codelyzer/util/logger";
 import {ActivatedRoute} from "@angular/router";
 import {environment} from "../../environments/environment";
+import * as _ from "lodash";
 
 @Component({
   selector: 'app-field',
@@ -36,16 +37,17 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   players: Array<any> = [];
   player: any = {};
+  winner: any = {};
 
   isPlayerHere(c, r) {
-    return (this.players[0].x.toString() === c.toString() && this.players[0].y.toString() === r.toString())
+    return (this.players[0].x.toString() === c.toString() && this.players[0].y.toString() === r.toString() && this.players[0].energy > 0)
     // return (this.data.players[0].x === x && this.data.players[0].y === y)
   }
   isPlayer2Here(c, r) {
-    return (this.players[1].x.toString() === c.toString() && this.players[1].y.toString() === r.toString())
+    return (this.players[1].x.toString() === c.toString() && this.players[1].y.toString() === r.toString() && this.players[1].energy > 0)
   }
   isPlayer3Here(c, r) {
-    return (this.players[2].x.toString() === c.toString() && this.players[2].y.toString() === r.toString())
+    return (this.players[2].x.toString() === c.toString() && this.players[2].y.toString() === r.toString() && this.players[2].energy > 0)
   }
 
 
@@ -55,7 +57,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   public data: any;
   public map = [];
 
-  descs = ['Waiting for players...', 'Waiting for start the game', 'The game is continue', 'The Game is ended'];
+  descs = ['Waiting for players...', 'Waiting for start the game', 'The game is continue', 'The Game is over!'];
   getStateDescription()
   {
     return this.descs[this.state];
@@ -80,11 +82,17 @@ export class FieldComponent implements OnInit, OnDestroy {
           _this.player = p
         }
         _this.players.push(p);
-        console.log(_this.players[0], _this.players[1], _this.players[2])
+        console.log(_this.players[0], _this.players[1], _this.players[2]);
+      }
+
+      if (_this.state == 3) {
+        _this.winner = _.find(_this.players, (o) => {
+          return o.energy > 0;
+        });
       }
     }
 
-    f();
+    await f();
     this.timer = setInterval(async () =>{
       f();
       // clearInterval(this.timer)
