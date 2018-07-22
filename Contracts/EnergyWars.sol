@@ -30,7 +30,7 @@ contract EnergyWars {
         Finished
     }
 
-    uint8[3] stepEnergy = [10, 30, 80];
+    uint8[6] stepEnergy = [10, 20, 40, 70, 90, 95];
     GameState public state = GameState.WaitingForPlayers;
 
     function EnergyWars(){
@@ -122,6 +122,12 @@ contract EnergyWars {
         return uint16(x);
     }
 
+    function max(uint16 x,uint16 y) pure internal returns (uint16)
+    {
+        if (x > y) return x;
+        return y;
+    }
+
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
         Player player = players[uint8(idxCurrentPlayerTurn%3)];
@@ -129,7 +135,8 @@ contract EnergyWars {
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        assert((xOffset <= 5 && xOffset >=-5 && yOffset == 0)  || (yOffset <= 5 && yOffset >=-5 && xOffset == 0));
+        //        assert((xOffset <= 5 && xOffset >=-5 && yOffset == 0)  || (yOffset <= 5 && yOffset >=-5 && xOffset == 0));
+        assert((xOffset <= 5 && xOffset >=-5)  && (yOffset <= 5 && yOffset >=-5));
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
         uint16 newX = uint16(int16(x) + xOffset);
@@ -138,7 +145,7 @@ contract EnergyWars {
         assert(newY > 0 && newY < 30);
         //устанавливаем новую позицию и отнимаем энергию за ход
         player.position = newY * 30 + newX;
-        player.energy -= (player.energy * stepEnergy[uint256(abs(xOffset) + abs(yOffset) - 1)]) / 100;
+        player.energy -= (player.energy * stepEnergy[uint256(max(abs(xOffset), abs(yOffset)) - 1)]) / 100;
         player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
         //расчитать и прибавить если выпадит бонусную энергию

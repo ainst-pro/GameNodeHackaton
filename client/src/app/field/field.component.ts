@@ -109,7 +109,8 @@ export class FieldComponent implements OnInit, OnDestroy {
       const player = this.data.players[this.idxCurrentPlayerTurn];
       const offX = Math.abs(player.x - c);
       const offY = Math.abs(player.y - r);
-      return (offX>0 && offX<=3 && offY ==0) || (offY>0 && offY<=3 && offX ==0);
+      // return (offX>0 && offX<=3 && offY ==0) || (offY>0 && offY<=3 && offX ==0);
+      return (offX>=0 && offX<=5) && (offY>=0 && offY<=5);
     }
   }
 
