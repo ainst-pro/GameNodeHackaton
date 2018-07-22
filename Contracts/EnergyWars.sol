@@ -30,7 +30,7 @@ contract EnergyWars {
         Finished
     }
 
-    uint8[6] stepEnergy = [5, 15, 30, 70, 90, 95];
+    uint8[6] stepEnergy = [0, 7, 18, 33, 75, 90];
     GameState public state = GameState.WaitingForPlayers;
 
     function EnergyWars(){
