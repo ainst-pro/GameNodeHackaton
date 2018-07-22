@@ -129,7 +129,7 @@ contract EnergyWars {
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        assert((xOffset <= 3 && xOffset >=-3 && yOffset == 0)  || (yOffset <= 3 && yOffset >=-3 && xOffset == 0));
+        assert((xOffset <= 5 && xOffset >=-5 && yOffset == 0)  || (yOffset <= 5 && yOffset >=-5 && xOffset == 0));
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
         uint16 newX = uint16(int16(x) + xOffset);
@@ -145,7 +145,7 @@ contract EnergyWars {
         if (uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= field[player.position]) player.energy += 1000;
 
         //расчитываем бонус
-        if ( gameBonus.position == 0 && gameBonus.value == 0 && uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= 10) {
+        if ( gameBonus.position == 0 && gameBonus.value == 0 && uint16(uint256(blockhash(block.number - block.timestamp%249)) % 100) <= 30) {
             gameBonus.position = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 900);
             gameBonus.value = uint16(uint256(blockhash(block.number - block.timestamp%249)) % 50) + 20;
         }
