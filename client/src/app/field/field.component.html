@@ -5,9 +5,9 @@
       <h1 class="text-center">Energy Wars</h1>
       <div class="gameData">
         <p>
-          Current game contract: <a target="_blank" href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
+          Игровой контракт: <a target="_blank" href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
           <br>
-          Game link: <input type="text" style="width: 650px" readonly [value]="gameLink" class="">
+          Ссылка на игру: <input type="text" style="width: 650px" readonly [value]="gameLink" class="">
         </p>
       </div>
       <div>
@@ -44,8 +44,8 @@
         }">
           <h5>
             <i class="fas ft-flag player{{ i+1 }}Color"></i>
-            Player
-            <sup class="text-muted small" *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(You)</sup>
+            Игрок {{ i+1 }}
+            <sup class="text-muted small" *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(Это вы)</sup>
           </h5>
         <p class="address">
           {{player.playerAddress}}
@@ -67,19 +67,19 @@
       <!--<p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>-->
 
       <div class="text-center mt-3">
-        <p>{{getStateDescription()}} <span *ngIf="!isMineTurn() && winner.playerAddress !== ''">Player {{ idxCurrentPlayerTurn+1 }} is turn.</span></p>
+        <p>{{getStateDescription()}} <span *ngIf="!isMineTurn() && winner.playerAddress !== ''">Игрок {{ idxCurrentPlayerTurn+1 }} делает ход.</span></p>
         <div class="alertBox" *ngIf="isMineTurn() && winner.playerAddress == ''">
           <h3 class="p-0 m-0">
-            Your turn!
+            Ваш ход!
           </h3>
         </div>
 
         <div class="alertBox" *ngIf="winner.playerAddress">
           <h3 class="p-0 m-0">
-            The Game is over!
+            Игра завершена!
           </h3>
           <p class="p-0 m-0">
-            Player {{ winner.playerAddress }} WIN!
+            Игрок {{ winner.playerAddress }} победил!
           </p>
         </div>
       </div>
