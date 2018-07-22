@@ -1,4 +1,6 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
+import {environment} from "../environments/environment";
 
 
 @Component({
@@ -7,5 +9,24 @@ import {Component, OnInit} from '@angular/core';
     styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {}
+
+  get address()
+  {
+    return environment.GameAddress;
+  }
+
+  get gameLink()
+  {
+    return `${environment.server}?address=${this.address}`;
+  }
+
+  constructor(private route: ActivatedRoute) {
+    this.route.queryParams
+      .subscribe(params => {
+        if (params.address)
+        {
+          environment.GameAddress = params.address;
+        }
+      });
+  }
 }
