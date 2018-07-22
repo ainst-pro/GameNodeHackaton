@@ -149,22 +149,20 @@ contract EnergyWars {
         // проверяем есть ли другой игрок в клетке и проводим бой
         if (players[uint8((idxCurrentPlayerTurn+1)%3)].position == player.position && players[uint8((idxCurrentPlayerTurn+1)%3)].energy > 0){
             if (player.energy > players[uint8((idxCurrentPlayerTurn+1)%3)].energy) {
-                player.energy += players[uint8((idxCurrentPlayerTurn+1)%3)].energy;
+                player.energy -= players[uint8((idxCurrentPlayerTurn+1)%3)].energy * 20 / 100;
                 players[uint8((idxCurrentPlayerTurn+1)%3)].energy = 0;
-            }
-            if (player.energy < players[uint8((idxCurrentPlayerTurn+1)%3)].energy) {
-                players[uint8((idxCurrentPlayerTurn+1)%3)].energy += player.energy;
+            }else if (player.energy < players[uint8((idxCurrentPlayerTurn+1)%3)].energy) {
+                players[uint8((idxCurrentPlayerTurn+1)%3)].energy -= player.energy * 20 / 100;
                 player.energy = 0;
             }
         }
 
         if (players[uint8((idxCurrentPlayerTurn+2)%3)].position == player.position && players[uint8((idxCurrentPlayerTurn+2)%3)].energy > 0){
             if (player.energy > players[uint8((idxCurrentPlayerTurn+2)%3)].energy) {
-                player.energy += players[uint8((idxCurrentPlayerTurn+2)%3)].energy;
+                player.energy -= players[uint8((idxCurrentPlayerTurn+2)%3)].energy * 20 / 100;
                 players[uint8((idxCurrentPlayerTurn+2)%3)].energy = 0;
-            }
-            if (player.energy < players[uint8((idxCurrentPlayerTurn+2)%3)].energy) {
-                players[uint8((idxCurrentPlayerTurn+2)%3)].energy += player.energy;
+            }else if (player.energy < players[uint8((idxCurrentPlayerTurn+2)%3)].energy) {
+                players[uint8((idxCurrentPlayerTurn+2)%3)].energy -= player.energy * 20 / 100;
                 player.energy = 0;
             }
         }
