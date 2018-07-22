@@ -137,7 +137,7 @@ contract EnergyWars {
         assert(newX > 0 && newX < 30);
         assert(newY > 0 && newY < 30);
         //устанавливаем новую позицию и отнимаем энергию за ход
-        player.position = (newY - 1) * 30 + newX - 1;
+        player.position = newY * 30 + newX;
         player.energy -= (player.energy * stepEnergy[uint256(abs(xOffset) + abs(yOffset) - 1)]) / 100;
         player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
