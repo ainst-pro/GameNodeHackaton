@@ -25,6 +25,8 @@ export class FieldComponent implements OnInit, OnDestroy {
       });
   }
 
+  showRules: boolean = false;
+
   get address()
   {
     return environment.GameAddress;
