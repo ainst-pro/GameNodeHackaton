@@ -118,7 +118,7 @@ contract EnergyWars {
 
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
-        Player memory player = players[uint8(idxCurrentPlayerTurn%3)];
+        Player player = players[uint8(idxCurrentPlayerTurn%3)];
         assert(player.playerAddress == msg.sender && player.energy > 0);
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
@@ -173,10 +173,15 @@ contract EnergyWars {
             }
         }
 
-        idxCurrentPlayerTurn += 1;
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) {
-            idxCurrentPlayerTurn += 1;
+        idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+        if (players[idxCurrentPlayerTurn].energy == 0) {
+            idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+
+            if (players[idxCurrentPlayerTurn].energy == 0) {
+                state = GameState.Finished;
+            }
         }
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
+
+        // if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
     }
 }
