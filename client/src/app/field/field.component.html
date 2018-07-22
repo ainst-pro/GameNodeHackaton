@@ -11,8 +11,8 @@
         </p>
       </div>
       <div>
-        <a href="" onclick="return false" *ngIf="!showRules" (click)="showRules=true">Показать правила</a>
-        <a href="" onclick="return false" *ngIf="showRules" (click)="showRules=false">Скрыть правила</a>
+        <a style="font-size: 22px;color: orange" href="" onclick="return false" *ngIf="!showRules" (click)="showRules=true">Показать правила</a>
+        <a style="font-size: 22px;color: orange"  href="" onclick="return false" *ngIf="showRules" (click)="showRules=false">Скрыть правила</a>
         <div *ngIf="showRules">
           <p>Игрок ходит в 8 направлениях максимум на 5 клеток, каждый ход требует энергии</p>
           <ul>
