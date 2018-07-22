@@ -75,7 +75,7 @@ contract EnergyWars {
         else
             position = 796;
 
-        players.push(Player(msg.sender, position, 1 /*basic energy*/));
+        players.push(Player(msg.sender, position, 100 /*basic energy*/));
         checkGamer[msg.sender] = true;
 
         if (players.length == 3) state = GameState.WaitingForMapGeneration;
@@ -123,7 +123,7 @@ contract EnergyWars {
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        assert(xOffset <= 3 && yOffset == 0  || yOffset <= 3 && xOffset == 0);
+        assert((xOffset <= 3 && xOffset >=-3 && yOffset == 0)  || (yOffset <= 3 && yOffset >=-3 && xOffset == 0));
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
         uint16 newX = uint16(x + xOffset);
