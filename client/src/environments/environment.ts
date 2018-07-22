@@ -6,7 +6,7 @@
 export const environment = {
     production: false,
     server: '',
-    GameAddress : '0x82500b5894fc1d60b4d21bbb4e72f1855813112f',
+    GameAddress : '0x4703f3bb2145bd2b66be5f987b8e9d0084ad6e4b',
     GameABI: [
       {
         "constant": false,

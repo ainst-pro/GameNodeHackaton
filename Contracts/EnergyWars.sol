@@ -75,7 +75,7 @@ contract EnergyWars {
         else
             position = 796;
 
-        players.push(Player(msg.sender, position, 1 /*basic energy*/));
+        players.push(Player(msg.sender, position, 100 /*basic energy*/));
         checkGamer[msg.sender] = true;
 
         if (players.length == 3) state = GameState.WaitingForMapGeneration;
@@ -116,23 +116,29 @@ contract EnergyWars {
         _field = field;
     }
 
+    function abs(int16 x) pure internal returns (uint16)
+    {
+        if (x < 0) return -x;
+        return x;
+    }
+
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
     {
-        Player memory player = players[uint8(idxCurrentPlayerTurn%3)];
+        Player player = players[uint8(idxCurrentPlayerTurn%3)];
         assert(player.playerAddress == msg.sender && player.energy > 0);
         assert(state == GameState.Started);
         assert(indexTargetPlayer < 3);
         // Ходим максимум на 3 в одном из направлений
-        assert(xOffset <= 3 && yOffset == 0  || yOffset <= 3 && xOffset == 0);
+        assert((xOffset <= 3 && xOffset >=-3 && yOffset == 0)  || (yOffset <= 3 && yOffset >=-3 && xOffset == 0));
         int16 x = int16(player.position) % 30;
         int16 y = int16(player.position) / 30;
-        uint16 newX = uint16(x + xOffset);
-        uint16 newY = uint16(y + yOffset);
+        uint16 newX = uint16(int16(x) + xOffset);
+        uint16 newY = uint16(int16(y) + yOffset);
         assert(newX > 0 && newX < 30);
         assert(newY > 0 && newY < 30);
         //устанавливаем новую позицию и отнимаем энергию за ход
         player.position = (newY - 1) * 30 + newX - 1;
-        player.energy -= (player.energy * stepEnergy[uint256(xOffset + yOffset - 1)]) / 100;
+        player.energy -= (player.energy * stepEnergy[uint256(abs(xOffset) + abs(yOffset) - 1)]) / 100;
         player.energy += 100; //прибавляем энергию за ход 1*10**2, два знака после запятой
 
         //расчитать и прибавить если выпадит бонусную энергию
@@ -173,10 +179,15 @@ contract EnergyWars {
             }
         }
 
-        idxCurrentPlayerTurn += 1;
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) {
-            idxCurrentPlayerTurn += 1;
+        idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+        if (players[idxCurrentPlayerTurn].energy == 0) {
+            idxCurrentPlayerTurn = (idxCurrentPlayerTurn + 1) % 3;
+
+            if (players[idxCurrentPlayerTurn].energy == 0) {
+                state = GameState.Finished;
+            }
         }
-        if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
+
+        // if (players[uint8(idxCurrentPlayerTurn%3)].energy == 0) state = GameState.Finished;
     }
 }
