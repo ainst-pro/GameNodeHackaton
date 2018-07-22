@@ -4,11 +4,11 @@
 
       <h1>Energy Wars</h1>
 
-      <div *ngFor="let player of data?.players; let i = index"
-      [ngClass]="{
-      playerMeta: true,
-      active: i === idxCurrentPlayerTurn
-      }">
+      <div *ngFor="let player of players; let i = index"
+        [ngClass]="{
+        playerMeta: true,
+        active: i === idxCurrentPlayerTurn
+        }">
           <h5>
             <i class="fas ft-flag player{{ i+1 }}Color"></i>
             Игрок
