@@ -20,7 +20,7 @@
         <strong>Новая игра создана <a target="_blank" href="https://ropsten.etherscan.io/address/{{newGameAddress}}">{{newGameAddress}}</a></strong>
       </p>
 
-      <div class="row gameList" *ngIf="!waitingForNewGame">
+      <div class="row gameList" *ngIf="!waitingForNewGame && gameAddress">
         <div class="col-sm-8 text-left">
           <p>
             <span class="small text-muted">Текущая игра</span>
