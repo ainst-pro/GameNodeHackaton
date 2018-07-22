@@ -11,8 +11,8 @@
         }">
           <h5>
             <i class="fas ft-flag player{{ i+1 }}Color"></i>
-            Игрок
-            <sup class="text-muted small" *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(это Вы)</sup>
+            Player
+            <sup class="text-muted small" *ngIf="web3.getCurrentAddress().toLowerCase() === player.playerAddress.toLowerCase()">(You)</sup>
           </h5>
         <p class="address">
           {{player.playerAddress}}
@@ -23,10 +23,12 @@
       <!--<p><strong>Player2 Energy:</strong> {{ requestService.player2.energy }}</p>-->
       <!--<p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>-->
 
-      <div class="text-center">
-        <p>{{getStateDescription()}}</p>
+      <div class="text-center mt-3">
+        <p>{{getStateDescription()}}. <span *ngIf="!isMineTurn()">Player {{ idxCurrentPlayerTurn+1 }} is turn</span></p>
         <div class="alertBox" *ngIf="isMineTurn()">
-          <h3 class="p-0">Ваш ход!</h3>
+          <h3 class="p-0 m-0">
+            Your turn!
+          </h3>
         </div>
       </div>
 

@@ -36,7 +36,7 @@ export class FieldComponent implements OnInit, OnDestroy {
   public data: any;
   public map = [];
 
-  descs = ['Ожидание игроков...', 'Ожадание начала игры', 'Идёт игра', 'Игра завершена!'];
+  descs = ['Waiting for players...', 'Waiting for start the game', 'The game is continue', 'The Game is ended'];
   getStateDescription()
   {
     return this.descs[this.state];
