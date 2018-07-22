@@ -15,19 +15,17 @@ export class FieldComponent implements OnInit, OnDestroy {
     this.web3.loadNativeWeb3();
   }
 
-  player: any;
-  player2: any;
-  player3: any;
+  players: Array<any> = [];
 
   isPlayerHere(c, r) {
-    return (this.player.x.toString() === c.toString() && this.player.y.toString() === r.toString())
+    return (this.players[0].x.toString() === c.toString() && this.players[0].y.toString() === r.toString())
     // return (this.data.players[0].x === x && this.data.players[0].y === y)
   }
   isPlayer2Here(c, r) {
-    return (this.player2.x.toString() === c.toString() && this.player2.y.toString() === r.toString())
+    return (this.players[1].x.toString() === c.toString() && this.players[1].y.toString() === r.toString())
   }
   isPlayer3Here(c, r) {
-    return (this.player3.x.toString() === c.toString() && this.player3.y.toString() === r.toString())
+    return (this.players[2].x.toString() === c.toString() && this.players[2].y.toString() === r.toString())
   }
 
 
@@ -52,26 +50,14 @@ export class FieldComponent implements OnInit, OnDestroy {
        this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: (idx/30).toFixed(0), value: (x*1+10)/100});});
        console.log(this.data);
 
-      this.player = undefined;
-      this.player2 = undefined;
-      this.player3 = undefined;
+       this.players = [];
        for (let p of this.data.players) {
          if (p.playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase()) {
-           this.player = p;
-           this.player.x = p.x;
-           this.player.y = p.y;
+           this.players.unshift(p)
          } else {
-           if (!this.player2) {
-             this.player2 = p;
-             this.player2.x = p.x;
-             this.player2.y = p.y;
-           } else {
-             this.player3 = p;
-             this.player3.x = p.x;
-             this.player3.y = p.y;
-           }
+           this.players.push(p);
          }
-         console.log(this.player, this.player2, this.player3)
+         console.log(this.players[0], this.players[1], this.players[2])
        }
       // clearInterval(this.timer)
     }, 5000);
