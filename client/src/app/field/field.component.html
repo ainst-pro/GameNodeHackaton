@@ -47,11 +47,14 @@
         </div>
       </div>
 
+      <div class="text-center mt-3">{{tipForPlayer}}</div>
+
       <div id="map">
         <div
              *ngFor="let cell of map"
              [ngStyle]="{background: 'rgba(81,121,183,' + cell.value + ')'}"
              (click)="movePlayer(cell.c,cell.r)"
+             (mouseenter)="generateTipOnHover(cell.c,cell.r)"
              [ngClass]="{
                cell: true,
                highlight: isHighlightedCell(cell.c, cell.r),

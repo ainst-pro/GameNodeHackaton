@@ -132,6 +132,26 @@ export class FieldComponent implements OnInit, OnDestroy {
     if (this.timer) clearInterval(this.timer);
   }
 
+  tipForPlayer: string = '';
+
+  energySteps = [0, 7, 18, 33, 75, 90];
+  generateTipOnHover(c, r)
+  {
+    this.tipForPlayer = '';
+    if (this.isMineTurn())
+    {
+      const offX = Math.abs(this.player.x - c);
+      const offY = Math.abs(this.player.y - r);
+
+      const persent = this.energySteps[Math.max(offX, offY)-1];
+      if (persent)
+      {
+        this.tipForPlayer = `Тратится энергии ${persent}% за ход (${this.data.players[this.idxCurrentPlayerTurn].energy * persent / 100} энергии)`;
+      }
+
+    }
+  }
+
   isHighlightedCell(c, r)
   {
     if (this.isMineTurn())
