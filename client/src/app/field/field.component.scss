@@ -83,3 +83,18 @@
   background: #ffa000a1;
   display: inline-block;
 }
+
+input {
+  width: 650px;
+  background: #404040;
+  border: 1px solid #565656;
+  color: #aaa;
+  padding: 3px 7px;
+  border-radius: 2px 2px 2px 2px;
+  -moz-border-radius: 2px 2px 2px 2px;
+  -webkit-border-radius: 2px 2px 2px 2px;
+}
+
+.gameData {
+  font-size: 0.8rem;
+}

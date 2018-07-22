@@ -3,6 +3,8 @@ import {getRandomString} from "selenium-webdriver/safari";
 import {MainService} from "app/main.service";
 import {Web3NativeService} from "../web3/web3.native.service";
 import {logger} from "codelyzer/util/logger";
+import {ActivatedRoute} from "@angular/router";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-field',
@@ -11,8 +13,25 @@ import {logger} from "codelyzer/util/logger";
 })
 export class FieldComponent implements OnInit, OnDestroy {
 
-  constructor(public mainService: MainService, public web3 : Web3NativeService) {
+  constructor(public mainService: MainService, public web3 : Web3NativeService, private route: ActivatedRoute) {
     this.web3.loadNativeWeb3();
+    this.route.queryParams
+      .subscribe(params => {
+        if (params.address)
+        {
+          environment.GameAddress = params.address;
+        }
+      });
+  }
+
+  get address()
+  {
+    return environment.GameAddress;
+  }
+
+  get gameLink()
+  {
+    return `${environment.server}?address=${this.address}`;
   }
 
   players: Array<any> = [];

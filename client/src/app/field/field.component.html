@@ -3,7 +3,13 @@
     <div class="col-12 pt-3">
 
       <h1 class="text-center">Energy Wars</h1>
-
+      <div class="gameData">
+        <p>
+          Current game contract: <a target="_blank" href="https://ropsten.etherscan.io/address/{{address}}">{{address}}</a>
+          <br>
+          Game link: <input type="text" style="width: 650px" readonly [value]="gameLink" class="">
+        </p>
+      </div>
       <div *ngFor="let player of players; let i = index"
         [ngClass]="{
         playerMeta: true,
@@ -24,7 +30,7 @@
       <!--<p><strong>Player3 Energy:</strong> {{ requestService.player3.energy }}</p>-->
 
       <div class="text-center mt-3">
-        <p>{{getStateDescription()}}. <span *ngIf="!isMineTurn()">Player {{ idxCurrentPlayerTurn+1 }} is turn</span></p>
+        <p>{{getStateDescription()}}. <span *ngIf="!isMineTurn()">Player {{ idxCurrentPlayerTurn+1 }} is turn.</span></p>
         <div class="alertBox" *ngIf="isMineTurn()">
           <h3 class="p-0 m-0">
             Your turn!
