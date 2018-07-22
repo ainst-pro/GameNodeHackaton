@@ -20,12 +20,19 @@ export class AppComponent {
     return `${environment.server}?address=${this.address}`;
   }
 
+  isWeb3Installed : any;
+
   constructor(private route: ActivatedRoute) {
+
+    this.isWeb3Installed = !!window['web3'];
+
+    environment.GameAddress = localStorage['address'] || environment.GameAddress;
     this.route.queryParams
       .subscribe(params => {
         if (params.address)
         {
           environment.GameAddress = params.address;
+          localStorage['address'] = environment.GameAddress;
         }
       });
   }
