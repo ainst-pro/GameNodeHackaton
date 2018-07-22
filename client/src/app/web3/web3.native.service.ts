@@ -290,16 +290,25 @@ export class Web3NativeService {
             from: this.getCurrentAddress(),
             gas: '2000000',
             gasPrice: gasPrice.toString()
-          }, function (err, contract)
+          }, function (err, transactionHash)
           {
-            if (contract && (typeof contract.address !== 'undefined'))
+            if (transactionHash)
             {
-              resolve({contract: contract, address: contract.address, interface: abi});
+              console.log(transactionHash);
             }
             else if (err)
             {
-              reject({error: err, contract: contract});
+              console.log(err);
             }
+          }).on('error', function(error){ reject({error: error}); })
+          .on('transactionHash', function(transactionHash){console.log(transactionHash);})
+          .on('receipt', function(receipt){
+            console.log(receipt);
+          })
+          .on('confirmation', function(confirmationNumber, receipt){ console.log(receipt); })
+          .then(function(newContractInstance){
+            environment.GameAddress = newContractInstance.options.address;
+            resolve({contract: newContractInstance, address: newContractInstance.options.address, interface: newContractInstance.options.interface});
           });
       });
   }
