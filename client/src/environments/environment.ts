@@ -5,7 +5,7 @@
 
 export const environment = {
     production: false,
-    server: '',
+    server: 'http://localhost:4200',
     GameAddress : '0x1b40ef68524fe60963f11d24782a21c76db1d238',
     GameABI: [
       {

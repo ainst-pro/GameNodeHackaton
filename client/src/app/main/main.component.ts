@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Web3NativeService} from "../web3/web3.native.service";
 import {MainService} from "../main.service";
 import {Router} from '@angular/router';
@@ -9,7 +9,7 @@ import * as _ from "lodash";
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.scss']
 })
-export class MainComponent implements OnInit {
+export class MainComponent implements OnInit, OnDestroy {
 
   constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router) {
     this.web3.loadNativeWeb3();
@@ -19,9 +19,11 @@ export class MainComponent implements OnInit {
   playerRegistered = false;
   playersReady = false;
 
+  intervalId: any;
+
   async ngOnInit() {
 
-    let intervalId = setInterval(async () => {
+    this.intervalId = setInterval(async () => {
       await this.mainService.getData();
       let player = _.find(this.mainService.gameData.players, (o) => {
         return o.playerAddress.toString().toLowerCase() === this.web3.getCurrentAddress().toString().toLowerCase();
@@ -40,7 +42,8 @@ export class MainComponent implements OnInit {
       }
 
       if (this.mainService.gameState === '2'){
-        clearInterval(intervalId);
+        clearInterval(this.intervalId);
+        this.intervalId = null;
       }
     }, 2000)
 
@@ -54,6 +57,10 @@ export class MainComponent implements OnInit {
   async start() {
     await this.mainService.start();
     await this.router.navigate(['/field']);
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervalId) clearInterval(this.intervalId);
   }
 
 }
