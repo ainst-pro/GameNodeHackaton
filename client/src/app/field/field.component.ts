@@ -56,6 +56,7 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   timer: any;
   public state: number;
+  public target: number = 0;
   public idxCurrentPlayerTurn: number;
   public data: any;
   public map = [];
@@ -123,7 +124,7 @@ export class FieldComponent implements OnInit, OnDestroy {
       const offX = c - player.x;
       const offY = r - player.y;
       // alert(offX + ' ' + offY);
-      this.web3.Game.methods.action(offX, offY, 0).send({from: this.web3.getCurrentAddress()});
+      this.web3.Game.methods.action(offX, offY, this.target).send({from: this.web3.getCurrentAddress()});
     }
     // await this.mainService.movePlayer(r, c);
   }
@@ -146,5 +147,10 @@ export class FieldComponent implements OnInit, OnDestroy {
 
   isMineTurn() {
     return this.data && this.data.players[this.idxCurrentPlayerTurn] && (this.data.players[this.idxCurrentPlayerTurn].playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase());
+  }
+
+  setTarget(id) {
+    this.target = id;
+    console.log(this.target);
   }
 }

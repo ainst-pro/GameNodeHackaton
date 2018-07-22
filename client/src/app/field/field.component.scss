@@ -124,3 +124,13 @@ input {
 .gameData {
   font-size: 0.8rem;
 }
+
+.target {
+  color: #777;
+  cursor: pointer;
+}
+
+.target.active {
+  color: #fff;
+  cursor: pointer;
+}
