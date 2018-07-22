@@ -36,29 +36,38 @@ export class FieldComponent implements OnInit, OnDestroy {
   public data: any;
   public map = [];
 
-  descs = ['Ожидание игроков...', 'Ожадание начала игры', 'Идёт игра', 'Игра завершена!'];
+  descs = ['Waiting for players...', 'Waiting for start the game', 'The game is continue', 'The Game is ended'];
   getStateDescription()
   {
     return this.descs[this.state];
   }
 
   async ngOnInit() {
-    this.timer = setInterval(async () =>{
-       this.state = await this.web3.Game.methods.state().call();
-       this.idxCurrentPlayerTurn = (await this.web3.Game.methods.idxCurrentPlayerTurn().call()) * 1;
-       this.data = await this.web3.getData();
-       this.map = [];
-       this.data.field.forEach((x, idx) => {this.map.push({c: idx%30, r: (idx/30).toFixed(0), value: (x*1+10)/100});});
-       console.log(this.data);
 
-       this.players = [];
-       for (let p of this.data.players) {
-         if (p.playerAddress.toLowerCase() === this.web3.getCurrentAddress().toLowerCase()) {
-           this.player = p
-         }
-           this.players.push(p);
-         console.log(this.players[0], this.players[1], this.players[2])
-       }
+    let _this = this;
+    async function f() {
+      _this.state = await _this.web3.Game.methods.state().call();
+      _this.idxCurrentPlayerTurn = (await _this.web3.Game.methods.idxCurrentPlayerTurn().call()) * 1;
+      _this.data = await _this.web3.getData();
+      _this.map = [];
+      _this.data.field.forEach((x, idx) => {
+        _this.map.push({c: idx % 30, r: (idx / 30).toFixed(0), value: (x * 1 + 10) / 100});
+      });
+      console.log(_this.data);
+
+      _this.players = [];
+      for (let p of _this.data.players) {
+        if (p.playerAddress.toLowerCase() === _this.web3.getCurrentAddress().toLowerCase()) {
+          _this.player = p
+        }
+        _this.players.push(p);
+        console.log(_this.players[0], _this.players[1], _this.players[2])
+      }
+    }
+
+    f();
+    this.timer = setInterval(async () =>{
+      f();
       // clearInterval(this.timer)
     }, 5000);
 
