@@ -1,21 +1,6 @@
 #map {
 
-  .cell.playerHere{
-    background: #ff470c80 !important;
-  }
 
-  .cell.player2Here{
-    background: #00bf2580 !important;
-  }
-
-  .cell.player3Here{
-    background: #0016ff80 !important;
-  }
-
-  .highlight
-  {
-    background: #ffff0060 !important;
-  }
 
   .cell {
     border: 1px solid #222;
@@ -34,7 +19,22 @@
     filter: brightness(400%);
   }
 
+  .cell.playerHere{
+    background: #ff470c80 !important;
+  }
 
+  .cell.player2Here{
+    background: #00bf2580 !important;
+  }
+
+  .cell.player3Here{
+    background: #0016ff80 !important;
+  }
+
+  .highlight
+  {
+    background: #ffff0060 !important;
+  }
 }
 
 .playerMeta {

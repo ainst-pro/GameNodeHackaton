@@ -64,7 +64,8 @@ export class MainComponent implements OnInit, OnDestroy {
     console.log('NEW GAME', game);
     if (game.address)
     {
-      await this.router.navigate(['/field?address=' + game.address.toString()]);
+      this.web3.loadNativeWeb3();
+      // await this.router.navigate(['/field?address=' + game.address]);
     }
     else {
       alert('При создании новой игры произошла ошибка. Попробуйте повторить попытку.');

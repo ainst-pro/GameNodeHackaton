@@ -72,7 +72,7 @@ export class FieldComponent implements OnInit, OnDestroy {
       _this.data = await _this.web3.getData();
       _this.map = [];
       _this.data.field.forEach((x, idx) => {
-        _this.map.push({c: idx % 30, r: (idx / 30).toFixed(0), value: (x * 1 + 10) / 100});
+        _this.map.push({c: idx % 30, r: Math.floor(idx / 30), value: (x * 1 + 10) / 100});
       });
       console.log(_this.data);
 
@@ -133,9 +133,9 @@ export class FieldComponent implements OnInit, OnDestroy {
   {
     if (this.isMineTurn())
     {
-      const player = this.data.players[this.idxCurrentPlayerTurn];
-      const offX = Math.abs(player.x - c);
-      const offY = Math.abs(player.y - r);
+      // const player = this.data.players[this.idxCurrentPlayerTurn];
+      const offX = Math.abs(this.player.x - c);
+      const offY = Math.abs(this.player.y - r);
       // return (offX>0 && offX<=3 && offY ==0) || (offY>0 && offY<=3 && offX ==0);
       return (offX>=0 && offX<=5) && (offY>=0 && offY<=5);
     }
