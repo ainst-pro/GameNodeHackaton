@@ -59,6 +59,18 @@ export class MainComponent implements OnInit, OnDestroy {
     await this.router.navigate(['/field']);
   }
 
+  async newGame() {
+    let game = await this.web3.newGame();
+    console.log('NEW GAME', game);
+    if (game.address)
+    {
+      await this.router.navigate(['/field?address=' + game.address.toString()]);
+    }
+    else {
+      alert('При создании новой игры произошла ошибка. Попробуйте повторить попытку.');
+    }
+  }
+
   ngOnDestroy(): void {
     if (this.intervalId) clearInterval(this.intervalId);
   }

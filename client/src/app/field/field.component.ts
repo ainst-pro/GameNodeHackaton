@@ -119,7 +119,7 @@ export class FieldComponent implements OnInit, OnDestroy {
       const player = this.data.players[this.idxCurrentPlayerTurn];
       const offX = c - player.x;
       const offY = r - player.y;
-      alert(offX + ' ' + offY);
+      // alert(offX + ' ' + offY);
       this.web3.Game.methods.action(offX, offY, 0).send({from: this.web3.getCurrentAddress()});
     }
     // await this.mainService.movePlayer(r, c);

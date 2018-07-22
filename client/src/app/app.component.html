@@ -9,4 +9,7 @@
     </ul>
   </div>
 </nav>
-<router-outlet></router-outlet>
+<router-outlet *ngIf="isWeb3Installed"></router-outlet>
+<p *ngIf="!isWeb3Installed">
+  Необходимо установить <a target="_blank" href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn">метамаск</a>
+</p>
