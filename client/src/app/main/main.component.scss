@@ -2,7 +2,8 @@
   padding-top: 170pt;
 
   p {
-    font-size: 36pt;
+    font-size: 16pt;
+    color: #666;
   }
 
   h1 {
@@ -31,7 +32,6 @@
 .hello {
   button {
     background-color: #ff0000 !important;
-    width: 200px;
   }
 
   p {
@@ -39,8 +39,14 @@
   }
 }
 
-.loader{
+.loader {
   width: 30px;
   height: 30px;
   display:inline-block;
+}
+
+.gameList {
+  padding: 20px;
+  background: rgba(8, 58, 95, 0.29);
+  margin-top: 50px;
 }

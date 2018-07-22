@@ -2,39 +2,48 @@
   <div class="row title">
     <div class="col-12 pt-3 text-center">
 
-      <p>this is</p>
+      <p>децентрализованная игра</p>
       <h1>Energy Wars</h1>
+      <p>Новая эра децентрализованных игр начинается прямо здесь</p>
+      <p class="small text-muted">Ваш адрес {{ web3.getCurrentAddress().toLowerCase() }}</p>
     </div>
   </div>
 
   <div class="row hello">
     <div class="col-12 pt-3 text-center">
+
       <button class="btn bg-success btn-lg white" style="background-color: #0ABC76 !important;" [disabled]="waitingForNewGame" (click)="newGame()">
-        New Game
+        Создать новую игру
       </button>
       <p *ngIf="waitingForNewGame">Идёт генерация новой игры. Пожалуйста, подождите...</p>
       <p *ngIf="newGameAddress">
-        <strong>Новая игра создана адреса смарт-контракта {{newGameAddress}}</strong>
-      </p>
-      <p *ngIf="!waitingForNewGame">
-        Вы можете поделиться ссылкой на игру с друзьями <br>
-        {{gameLink}}
+        <strong>Новая игра создана <a target="_blank" href="https://ropsten.etherscan.io/address/{{newGameAddress}}">{{newGameAddress}}</a></strong>
       </p>
 
+      <div class="row gameList" *ngIf="!waitingForNewGame">
+        <div class="col-sm-8 text-left">
+          <p>
+            <span class="small text-muted">Текущая игра</span>
+            <br>
+            {{gameAddress}} <br>
+          </p>
+          <p *ngIf="!waitingForNewGame">
+            <span class="small text-muted">Ссылка на игру</span> <br>
+            {{gameLink}}
+          </p>
+        </div>
 
-      <div *ngIf="!waitingForNewGame">
-        <p *ngIf="!playerRegistered">The game of new blockchain age is begining here</p>
-        <p>Текущий адрес игры {{gameAddress}}</p>
-        <button class="btn bg-primary btn-lg white"
-                (click)="register()"
-                [disabled]="registerLoading"
-                *ngIf="!playerRegistered"
-        >
+        <div class="col-sm-4">
+          <button class="btn bg-primary btn-lg white"
+                  (click)="register()"
+                  [disabled]="registerLoading"
+                  *ngIf="!playerRegistered"
+          >
           <span *ngIf="!registerLoading">
-          I'm with you!
+          Присоединиться к игре
           </span>
 
-          <span *ngIf="registerLoading">
+            <span *ngIf="registerLoading">
             <svg class="loader" version="1.1" id="L4" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
             viewBox="0 0 50 60" enable-background="new 0 0 0 0" xml:space="preserve">
             <circle fill="#fff" stroke="none" cx="6" cy="25" r="6">
@@ -64,21 +73,23 @@
           </svg>
           </span>
 
-        </button>
-
-        <p *ngIf="playerRegistered">Вы были зарегистрированы в игре</p>
+          </button>
+          <p *ngIf="playerRegistered">Вы зарегистрированы в игре</p>
           <p *ngIf="!playersReady">Ожидаем других игроков... {{amountPlayersReady}} из 3 готово</p>
-          <p *ngIf="playersReady">All players ready!</p>
-        <button class="btn bg-primary btn-lg white"
-                *ngIf="playerRegistered"
-                [disabled]="!playersReady"
-                (click)="start()"
-        >
-          Lets GO!
-        </button>
+          <p *ngIf="playersReady">Все игроки готовы</p>
+          <button class="btn bg-primary btn-lg white"
+                  *ngIf="playerRegistered"
+                  [disabled]="!playersReady"
+                  (click)="start()"
+          >
+            Погнали!
+          </button>
+        </div>
       </div>
 
-      <p class="small text-muted">using address {{ web3.getCurrentAddress().toLowerCase() }}</p>
+
+
+
     </div>
   </div>
 </div>
