@@ -47,15 +47,15 @@ contract EnergyWars {
             int16 positionY = int16((source % 900) / 30);
             uint256 shift = 2;
             for(int16 x = -3;x < 3;x++)
-            for(int16 y = -3;y < 3;y++)
-            {
-                uint256 position = uint256((positionY + y) * 30 + positionX + x);
-                if (position < 900)
+                for(int16 y = -3;y < 3;y++)
                 {
-                 field[position] += uint8((source / shift) % 40);
-                 shift = shift * 2;
+                    uint256 position = uint256((positionY + y) * 30 + positionX + x);
+                    if (position < 900)
+                    {
+                        field[position] += uint8((source / shift) % 40);
+                        shift = shift * 2;
+                    }
                 }
-            }
         }
         state = GameState.Started;
     }
@@ -118,8 +118,8 @@ contract EnergyWars {
 
     function abs(int16 x) pure internal returns (uint16)
     {
-        if (x < 0) return -x;
-        return x;
+        if (x < 0) return uint16(-x);
+        return uint16(x);
     }
 
     function action(int16 xOffset, int16 yOffset, uint8 indexTargetPlayer) public
