@@ -3,7 +3,6 @@ import {Web3NativeService} from "../web3/web3.native.service";
 import {MainService} from "../main.service";
 import {Router} from '@angular/router';
 import * as _ from "lodash";
-import {HttpClient} from "@angular/common/http";
 
 @Component({
   selector: 'app-main',
@@ -12,7 +11,7 @@ import {HttpClient} from "@angular/common/http";
 })
 export class MainComponent implements OnInit, OnDestroy {
 
-  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router, private http: HttpClient) {
+  constructor(public mainService: MainService, public web3 : Web3NativeService, public router: Router) {
     this.web3.loadNativeWeb3();
   }
 
@@ -61,7 +60,15 @@ export class MainComponent implements OnInit, OnDestroy {
   }
 
   async newGame() {
-    let response = await this.http.get('contract/EnergyWars.sol').toPromise();
+    let game = await this.web3.newGame();
+    console.log('NEW GAME', game);
+    if (game.address)
+    {
+      await this.router.navigate(['/field?address=' + game.address.toString()]);
+    }
+    else {
+      alert('При создании новой игры произошла ошибка. Попробуйте повторить попытку.');
+    }
   }
 
   ngOnDestroy(): void {
